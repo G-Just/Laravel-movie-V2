@@ -75,8 +75,8 @@ class MovieController extends Controller
         $tmdbResponse = Http::get('https://api.themoviedb.org/3/search/multi?query=' . $movie['Title'] . '&include_adult=true&primary_release_year=' . $movie['Year'] . '&' . $this->tmdbKey)->collect();
         $backdrop = 'https://image.tmdb.org/t/p/w1280/' . $tmdbResponse->get('results')[0]['backdrop_path'];
         $movieModel = Movie::query()->where('imdbID', '=', $id)->first();
-        $ratings = $movieModel?->ratings->all();
-        $ratings = isset($ratings) ? $ratings : [];
+        $ratings = $movieModel?->ratings;
+        $ratings = isset($ratings) ? $ratings : collect([]);
         return view('movies.show', compact(['movie', 'backdrop', 'ratings']));
     }
 

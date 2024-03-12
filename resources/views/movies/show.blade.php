@@ -4,8 +4,7 @@
             {{ __('Add your rating') }}
         </h2>
     </x-slot>
-
-    <div class="relative overflow-hidden text-white border-b-2 border-white">
+    <div class="relative overflow-hidden text-white border-white border-y-2">
         <img class="absolute hidden w-full opacity-50 brightness-50 blur-sm lg:block" src={{ $backdrop }}
             alt="Backdrop" />
         <div class="relative z-10 py-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -66,15 +65,16 @@
             <input type="hidden" name="runtime" value="{{ $movie['Runtime'] }}" />
 
             <x-input-label for="rating" :value="__('Enter your rating (0.1 - 10)')" />
-            <x-text-input id="rating" class="block w-full mt-1 max-w-96" type="text" name="rating" required />
+            <x-text-input value="{{ $ratings->firstWhere('user_id', Auth::user()->id)?->rating }}" id="rating"
+                class="block w-full mt-1 max-w-96" type="text" name="rating" required />
             <x-input-error :messages="$errors->get('rating')" class="my-2" />
             <x-input-label class="mt-2" for="comment" :value="__('Leave a comment (optional)')" />
             <textarea
                 class="w-full mt-1 border-gray-300 rounded-md shadow-sm max-w-96 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
-                name="comment" id="comment"></textarea>
+                name="comment" id="comment">{{ $ratings->firstWhere('user_id', Auth::user()->id)?->comment }}</textarea>
             <div class="flex justify-center">
                 <x-primary-button class="mt-4">
-                    {{ __('Submit') }}
+                    {{ $ratings->firstWhere('user_id', Auth::user()->id) ? 'Update' : 'Submit' }}
                 </x-primary-button>
             </div>
         </form>
@@ -92,7 +92,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse ($ratings as $rating)
+                @forelse ($ratings->all() as $rating)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td class="px-6 py-4">{{ $rating->id }}</td>
                         <td class="px-6 py-4">{{ $rating->user()->first()->name }}</td>
