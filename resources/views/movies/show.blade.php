@@ -92,14 +92,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($ratings as $rating)
+                @forelse ($ratings as $rating)
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td class="px-6 py-4">{{ $rating->id }}</td>
                         <td class="px-6 py-4">{{ $rating->user()->first()->name }}</td>
                         <td class="px-6 py-4">{{ $rating->rating }}</td>
                         <td class="px-6 py-4">{{ $rating->comment }}</td>
                     </tr>
-                @endforeach
+                @empty
+                    <h1>No ratings yet.</h1>
             </tbody>
         </table>
     </div>
