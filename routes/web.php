@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware('auth')->group(function () {
+    Route::get('/', [MovieController::class, 'index'])->name('home');
+    Route::get('/home', [MovieController::class, 'index'])->name('home');
 });
 
-Route::get('/home', [MovieController::class, 'index'])->name('home');
 
 Route::middleware('auth')->prefix('/movies')->name('movies.')->group(function () {
     Route::get('/new', [MovieController::class, 'new'])->name('new');
