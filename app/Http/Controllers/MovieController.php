@@ -76,6 +76,7 @@ class MovieController extends Controller
         $backdrop = 'https://image.tmdb.org/t/p/w1280/' . $tmdbResponse->get('results')[0]['backdrop_path'];
         $movieModel = Movie::query()->where('imdbID', '=', $id)->first();
         $ratings = $movieModel?->ratings->all();
+        $ratings = isset($ratings) ? $ratings : [];
         return view('movies.show', compact(['movie', 'backdrop', 'ratings']));
     }
 

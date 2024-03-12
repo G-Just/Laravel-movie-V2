@@ -100,7 +100,13 @@
                         <td class="px-6 py-4">{{ $rating->comment }}</td>
                     </tr>
                 @empty
-                    <h1>No ratings yet.</h1>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <td>No ratings yet.</td>
+                        <td>No ratings yet.</td>
+                        <td>No ratings yet.</td>
+                        <td>No ratings yet.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
