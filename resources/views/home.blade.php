@@ -15,6 +15,7 @@
                     @empty
                         <h1>No ratings yet.</h1>
                     @endforelse
+                    {{ $movies->links() }}
                 </div>
             </div>
         </div>

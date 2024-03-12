@@ -67,12 +67,40 @@
 
             <x-input-label for="rating" :value="__('Enter your rating (0.1 - 10)')" />
             <x-text-input id="rating" class="block w-full mt-1" type="text" name="rating" required />
-            <x-input-error :messages="$errors->get('rating')" class="mt-2" />
+            <x-input-error :messages="$errors->get('rating')" class="my-2" />
+            <x-input-label class="mt-2" for="comment" :value="__('Leave a comment (optional)')" />
+            <textarea
+                class="mt-1 border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                name="comment" id="comment" cols="54" rows="5"></textarea>
             <div class="flex justify-center">
                 <x-primary-button class="mt-4">
-                    {{ __('Add rating') }}
+                    {{ __('Submit') }}
                 </x-primary-button>
             </div>
         </form>
+    </div>
+    <hr class="mt-4 mb-8">
+    <div class="flex flex-col items-center pb-10">
+        <h1 class="mb-8 text-4xl text-center text-white">Ratings</h1>
+        <table class="w-1/2 text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">ID</th>
+                    <th scope="col" class="px-6 py-3">User</th>
+                    <th scope="col" class="px-6 py-3">Rating</th>
+                    <th scope="col" class="px-6 py-3">Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($ratings as $rating)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <td class="px-6 py-4">{{ $rating->id }}</td>
+                        <td class="px-6 py-4">{{ $rating->user()->first()->name }}</td>
+                        <td class="px-6 py-4">{{ $rating->rating }}</td>
+                        <td class="px-6 py-4">{{ $rating->comment }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </x-app-layout>

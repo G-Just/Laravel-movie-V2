@@ -5,9 +5,9 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="relative py-6 mx-auto rounded max-w-7xl sm:px-6 lg:px-8">
         <x-search-bar />
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8 rounded-xl">
             <div class="overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="grid grid-cols-1 py-6 text-white lg:grid-cols-3">
                     @forelse ($movies as $movie)

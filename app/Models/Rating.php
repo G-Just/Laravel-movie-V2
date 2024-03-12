@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Rating extends Model
@@ -12,6 +13,7 @@ class Rating extends Model
 
     protected $fillable = [
         'rating',
+        'comment',
         'user_id',
         'movie_id',
     ];
@@ -21,8 +23,8 @@ class Rating extends Model
         return $this->hasOne(Movie::class);
     }
 
-    public function user(): HasOne
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }

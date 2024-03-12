@@ -19,7 +19,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::withAvg('ratings', 'rating')->get();
+        $movies = Movie::withAvg('ratings', 'rating')->paginate(9);
         return view('home', compact(['movies']));
     }
 
@@ -42,7 +42,8 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         $validatedRating = $request->validate([
-            'rating' => 'numeric | min:0 | max:10 '
+            'rating' => 'numeric | min:0 | max:10',
+            'comment' => 'nullable'
         ]);
 
         $movieValidated = $request->validate([
@@ -73,7 +74,9 @@ class MovieController extends Controller
         $movie = Http::get($this->omdb . 'i=' . $id . '&plot=full')->collect()->all();
         $tmdbResponse = Http::get('https://api.themoviedb.org/3/search/multi?query=' . $movie['Title'] . '&include_adult=true&primary_release_year=' . $movie['Year'] . '&' . $this->tmdbKey)->collect();
         $backdrop = 'https://image.tmdb.org/t/p/w1280/' . $tmdbResponse->get('results')[0]['backdrop_path'];
-        return view('movies.show', compact(['movie', 'backdrop']));
+        $movieModel = Movie::query()->where('imdbID', '=', $id)->first();
+        $ratings = $movieModel?->ratings->all();
+        return view('movies.show', compact(['movie', 'backdrop', 'ratings']));
     }
 
     /**
