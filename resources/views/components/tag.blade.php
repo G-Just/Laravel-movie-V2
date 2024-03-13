@@ -1,6 +1,6 @@
 @props(['label'])
 
-<div class="my-2">
+<div class="my-2 lg:my-0">
     <div class="relative inline-block py-1 text-xs">
         <div class="absolute inset-0 flex text-slate-600">
             <svg height="100%" viewBox="0 0 50 100">
