@@ -7,9 +7,10 @@
             alt="Poster" />
         <div class="p-4 border-b-2 border-r-0 lg:pr-4 lg:border-b-0 lg:border-r-2 border-slate-700">
             <div class="flex flex-col lg:flex-row">
-                <h1 class="text-4xl font-bold">{{ $title }} <span
-                        class="mx-2 text-4xl font-thin">({{ $year }})</span> </h1>
-
+                <div class="flex">
+                    <h1 class="text-4xl font-bold max-w-[400px]">{{ $title }}</h1>
+                    <h1 class="mx-2 text-4xl font-thin">({{ $year }})</h1>
+                </div>
                 @if ($rated)
                     <x-tag :label="'Your rated this'" />
                 @endif

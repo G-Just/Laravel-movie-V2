@@ -7,18 +7,18 @@
 
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
+            <x-filtering-menu />
+            <div class="overflow-hidden bg-white shadow-sm dark:bg-slate-800 sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div class="mb-6">{{ $movies->links() }}</div>
                     @forelse ($movies as $movie)
-                        @if ($movie->ratings()->where('user_id', '=', Auth::user()->getAuthIdentifier())->first())
-                            <x-rated-movie-card :imdbid="$movie['imdbID']" :title="$movie['title']" :year="$movie['year']" :genre="$movie['genre']"
-                                :plot="$movie['plot']" :poster="$movie['poster']" :runtime="$movie['runtime']" :rating="$movie['ratings_avg_rating']"
-                                :rated="true" />
-                        @else
-                            <x-rated-movie-card :imdbid="$movie['imdbID']" :title="$movie['title']" :year="$movie['year']"
-                                :genre="$movie['genre']" :plot="$movie['plot']" :poster="$movie['poster']" :runtime="$movie['runtime']"
-                                :rating="$movie['ratings_avg_rating']" :rated="false" />
-                        @endif
+                        <x-rated-movie-card :imdbid="$movie['imdbID']" :title="$movie['title']" :year="$movie['year']" :genre="$movie['genre']"
+                            :plot="$movie['plot']" :poster="$movie['poster']" :runtime="$movie['runtime']" :rating="$movie['ratings_avg_rating']" :rated="$movie
+                                ->ratings()
+                                ->where('user_id', '=', Auth::user()->getAuthIdentifier())
+                                ->first()
+                                ? true
+                                : false" />
                     @empty
                         <h1>No ratings yet.</h1>
                     @endforelse

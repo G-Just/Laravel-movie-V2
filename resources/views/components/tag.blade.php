@@ -1,6 +1,6 @@
 @props(['label'])
 
-<div class="my-2 lg:my-0">
+<div class="my-2 overflow-hidden lg:my-0">
     <div class="relative inline-block py-1 text-xs">
         <div class="absolute inset-0 flex text-slate-600">
             <svg height="100%" viewBox="0 0 50 100">
@@ -10,7 +10,7 @@
             </svg>
             <div class="flex-grow h-full -ml-px rounded-md rounded-l-none bg-slate-600"></div>
         </div>
-        <span class="relative pr-px font-semibold text-white uppercase">
+        <span class="relative pr-px font-semibold text-white uppercase truncate">
             <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ $label }}<span>&nbsp;</span>
         </span>
     </div>
