@@ -34,6 +34,12 @@
             {{ $slot }}
         </main>
     </div>
+    @if (session()->has('message'))
+        <x-popup :message="session()->get('message')" :success="true" />
+    @endif
+    @if (session()->has('error'))
+        <x-popup :message="session()->get('error')" :success="false" />
+    @endif
 </body>
 
 </html>
