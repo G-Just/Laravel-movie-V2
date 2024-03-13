@@ -19,7 +19,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::withAvg('ratings', 'rating')->paginate(9);
+        $movies = Movie::withAvg('ratings', 'rating')->paginate(6);
         return view('home', compact(['movies']));
     }
 
