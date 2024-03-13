@@ -88,7 +88,7 @@
                     <th scope="col" class="px-6 py-3">ID</th>
                     <th scope="col" class="px-6 py-3">User</th>
                     <th scope="col" class="px-6 py-3">Rating</th>
-                    <th scope="col" class="px-6 py-3">Comment</th>
+                    <th scope="col" class="hidden px-6 py-3 lg:block">Comment</th>
                 </tr>
             </thead>
             <tbody>
@@ -97,14 +97,14 @@
                         <td class="px-6 py-4">{{ $rating->id }}</td>
                         <td class="px-6 py-4">{{ $rating->user()->first()->name }}</td>
                         <td class="px-6 py-4">{{ $rating->rating }}</td>
-                        <td class="px-6 py-4">{{ $rating->comment }}</td>
+                        <td class="hidden px-6 py-4 lg:block">{{ $rating->comment }}</td>
                     </tr>
                 @empty
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td>No ratings yet.</td>
                         <td>No ratings yet.</td>
                         <td>No ratings yet.</td>
-                        <td>No ratings yet.</td>
+                        <td class="hidden lg:block">No ratings yet.</td>
                     </tr>
                 @endforelse
             </tbody>
