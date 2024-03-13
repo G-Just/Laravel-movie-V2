@@ -10,8 +10,15 @@
             <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     @forelse ($movies as $movie)
-                        <x-rated-movie-card :imdbid="$movie['imdbID']" :title="$movie['title']" :year="$movie['year']" :genre="$movie['genre']"
-                            :plot="$movie['plot']" :poster="$movie['poster']" :runtime="$movie['runtime']" :rating="$movie['ratings_avg_rating']" />
+                        @if ($movie->ratings()->where('user_id', '=', Auth::user()->getAuthIdentifier())->first())
+                            <x-rated-movie-card :imdbid="$movie['imdbID']" :title="$movie['title']" :year="$movie['year']" :genre="$movie['genre']"
+                                :plot="$movie['plot']" :poster="$movie['poster']" :runtime="$movie['runtime']" :rating="$movie['ratings_avg_rating']"
+                                :rated="true" />
+                        @else
+                            <x-rated-movie-card :imdbid="$movie['imdbID']" :title="$movie['title']" :year="$movie['year']"
+                                :genre="$movie['genre']" :plot="$movie['plot']" :poster="$movie['poster']" :runtime="$movie['runtime']"
+                                :rating="$movie['ratings_avg_rating']" :rated="false" />
+                        @endif
                     @empty
                         <h1>No ratings yet.</h1>
                     @endforelse
