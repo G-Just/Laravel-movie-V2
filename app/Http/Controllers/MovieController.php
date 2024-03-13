@@ -63,7 +63,7 @@ class MovieController extends Controller
 
         Rating::updateOrCreate($ids, $validatedRating);
 
-        return redirect()->route('home');
+        return redirect()->route('home')->with('message', 'Rating added successfully');
     }
 
     /**

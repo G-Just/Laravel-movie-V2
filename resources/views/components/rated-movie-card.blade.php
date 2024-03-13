@@ -5,7 +5,7 @@
         <img class="h-[300px] mx-auto w-[200px]"
             src={{ $poster === 'N/A' ? 'https://www.prokerala.com/movies/assets/img/no-poster-available.jpg' : $poster }}
             alt="Poster" />
-        <div class="pr-4 border-r-2 border-slate-700">
+        <div class="p-4 border-b-2 border-r-0 lg:pr-4 lg:border-b-0 lg:border-r-2 border-slate-700">
             <h1 class="text-4xl font-bold">{{ $title }}<span class="mx-2 font-thin">({{ $year }})</span>
             </h1>
             <p class="mt-1 text-gray-500">
