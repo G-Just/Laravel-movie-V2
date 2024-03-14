@@ -1,4 +1,4 @@
-<div class="flex justify-center px-8 py-4 mb-8 rounded bg-slate-800">
+<div class="flex flex-col justify-center px-8 py-4 mb-8 rounded-lg lg:flex-row bg-slate-800">
     <form action={{ route('home') }} method="get" class="flex flex-col items-center justify-between w-full lg:flex-row">
         <div class="flex flex-col gap-4 lg:gap-8 lg:flex-row">
             <x-text-input placeholder="Search..." id="search" class="block mt-1 w-96" type="text" name="search"
@@ -16,15 +16,12 @@
                 <option value="alphabetical" @if (request('sorting') === 'alphabetical') selected @endif>Alphabetical</option>
             </select>
         </div>
-        <div>
+        <div class="gap-4">
+            <a class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-md dark:bg-gray-200 dark:text-gray-800 hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+                href={{ route('reset') }}>Reset</a>
             <x-primary-button class="mt-4 lg:mt-0 ms-3">
                 {{ __('Apply') }}
             </x-primary-button>
         </div>
     </form>
-    <div class="flex items-center">
-        <a href={{ route('reset') }}><x-primary-button class="mt-4 lg:mt-0 ms-3">
-                {{ __('Reset') }}
-            </x-primary-button></a>
-    </div>
 </div>
