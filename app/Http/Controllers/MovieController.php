@@ -17,9 +17,31 @@ class MovieController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $movies = Movie::withAvg('ratings', 'rating')->paginate(6);
+        $movies = Movie::withAvg('ratings', 'rating');
+
+        if ($request->has('search')) {
+            $movies = $movies->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $movies = match ($request->sorting) {
+            'rating' => $movies->orderBy('ratings_avg_rating', 'desc'),
+            'alphabetical' => $movies->orderBy('title'),
+            default => $movies
+        };
+
+        $movies = match ($request->rated) {
+            'rated' => $movies->whereHas('ratings', function ($query) {
+                return $query->where('user_id', '=', Auth::user()->getAuthIdentifier());
+            }),
+            'not_rated' => $movies->whereDoesntHave('ratings', function ($query) {
+                return $query->where('user_id', '=', Auth::user()->getAuthIdentifier());
+            }),
+            default => $movies
+        };
+
+        $movies = $movies->paginate(6);
         return view('home', compact(['movies']));
     }
 
@@ -63,7 +85,7 @@ class MovieController extends Controller
 
         Rating::updateOrCreate($ids, $validatedRating);
 
-        return redirect()->route('home')->with('message', 'Rating added successfully');
+        return redirect()->route('home')->with('message', 'Rating submitted successfully');
     }
 
     /**
@@ -73,19 +95,16 @@ class MovieController extends Controller
     {
         $movie = Http::get($this->omdb . 'i=' . $id . '&plot=full')->collect()->all();
         $tmdbResponse = Http::get('https://api.themoviedb.org/3/search/multi?query=' . $movie['Title'] . '&include_adult=true&primary_release_year=' . $movie['Year'] . '&' . $this->tmdbKey)->collect();
-        $backdrop = 'https://image.tmdb.org/t/p/w1280/' . $tmdbResponse->get('results')[0]['backdrop_path'];
+        $backdrop = count($tmdbResponse->get('results')) === 0 ? 'https://dl.airtable.com/exploreCoverImages%2FCQDQ7kFRSJi1BYaN68YI_exploreCoverImages%252FXrQhMoZpQqeo0X5Q2t1W_4slz_rck6kq-lloyd-dirks.jpg' : 'https://image.tmdb.org/t/p/w1280/' . $tmdbResponse->get('results')[0]['backdrop_path'];
         $movieModel = Movie::query()->where('imdbID', '=', $id)->first();
         $ratings = $movieModel?->ratings;
         $ratings = isset($ratings) ? $ratings : collect([]);
         return view('movies.show', compact(['movie', 'backdrop', 'ratings']));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function reset()
     {
-        //
+        return redirect()->route('home');
     }
 
     /**
@@ -99,8 +118,10 @@ class MovieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $movie = Movie::query()->where('imdbID', '=', $request->imdbID)->first();
+        $movie->find($movie->id)->ratings()->where('user_id', '=', $request->user_id)->first()->delete();
+        return redirect()->route('home')->with('message', 'Your rating deleted successfully');
     }
 }

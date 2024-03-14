@@ -72,12 +72,48 @@
             <textarea
                 class="w-full mt-1 border-gray-300 rounded-md shadow-sm max-w-96 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
                 name="comment" id="comment">{{ $ratings->firstWhere('user_id', Auth::user()->id)?->comment }}</textarea>
-            <div class="flex justify-center">
-                <x-primary-button class="mt-4">
-                    {{ $ratings->firstWhere('user_id', Auth::user()->id) ? 'Update' : 'Submit' }}
-                </x-primary-button>
-            </div>
+            <div class="flex justify-center gap-8">
+                @if ($ratings->firstWhere('user_id', Auth::user()->id))
+                    <x-primary-button class="mt-4">
+                        {{ __('Update') }}
+                    </x-primary-button>
         </form>
+        <x-danger-button class="mt-4" x-data=""
+            x-on:click.prevent="$dispatch('open-modal', 'confirm-rating-deletion')">{{ __('Delete') }}</x-danger-button>
+
+        <x-modal name="confirm-rating-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
+            <form method="POST" action="{{ route('movies.destroy') }}" class="p-6">
+                @csrf
+                <input type="hidden" name="imdbID" value={{ $movie['imdbID'] }}>
+                <input type="hidden" name="user_id" value={{ Auth::user()->id }}>
+
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                    {{ __('Are you sure you want to delete your rating?') }}
+                </h2>
+
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                    {{ __('The rating will be permenately deleted') }}
+                </p>
+
+                <div class="flex justify-end mt-6">
+                    <x-secondary-button x-on:click="$dispatch('close')">
+                        {{ __('Cancel') }}
+                    </x-secondary-button>
+
+                    <x-danger-button class="ms-3">
+                        {{ __('Delete rating') }}
+                    </x-danger-button>
+                </div>
+            </form>
+        </x-modal>
+    </div>
+@else
+    <x-primary-button class="mt-4">
+        {{ __('Submit') }}
+    </x-primary-button>
+    </div>
+    </form>
+    @endif
     </div>
     <hr class="mt-4 mb-8">
     <div class="flex flex-col items-center pb-10">
@@ -101,10 +137,10 @@
                     </tr>
                 @empty
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <td>No ratings yet.</td>
-                        <td>No ratings yet.</td>
-                        <td>No ratings yet.</td>
-                        <td class="hidden lg:block">No ratings yet.</td>
+                        <td class="px-6 py-4">No ratings yet.</td>
+                        <td class="px-6 py-4">No ratings yet.</td>
+                        <td class="px-6 py-4">No ratings yet.</td>
+                        <td class="hidden px-6 py-4 lg:block">No ratings yet.</td>
                     </tr>
                 @endforelse
             </tbody>

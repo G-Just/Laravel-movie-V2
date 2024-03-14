@@ -12,8 +12,9 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="mb-6">{{ $movies->links() }}</div>
                     @forelse ($movies as $movie)
-                        <x-rated-movie-card :imdbid="$movie['imdbID']" :title="$movie['title']" :year="$movie['year']" :genre="$movie['genre']"
-                            :plot="$movie['plot']" :poster="$movie['poster']" :runtime="$movie['runtime']" :rating="$movie['ratings_avg_rating']" :rated="$movie
+                        <x-rated-movie-card :count="count($movie->ratings)" :imdbid="$movie['imdbID']" :title="$movie['title']" :year="$movie['year']"
+                            :genre="$movie['genre']" :plot="$movie['plot']" :poster="$movie['poster']" :runtime="$movie['runtime']" :rating="$movie['ratings_avg_rating']"
+                            :rated="$movie
                                 ->ratings()
                                 ->where('user_id', '=', Auth::user()->getAuthIdentifier())
                                 ->first()
