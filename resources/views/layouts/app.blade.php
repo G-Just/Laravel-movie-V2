@@ -41,5 +41,6 @@
         <x-popup :message="session()->get('error')" :success="false" />
     @endif
 </body>
+<x-footer />
 
 </html>
