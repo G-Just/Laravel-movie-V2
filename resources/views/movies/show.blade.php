@@ -41,12 +41,21 @@
                     <div class="flex flex-col col-span-2">
                         <h1 class="text-2xl">Overview</h1>
                         <hr class="my-1" />
-                        <p class="line-clamp-5">{{ $movie['Plot'] }}</p>
+                        <p class="line-clamp-4">{{ $movie['Plot'] }}</p>
                     </div>
                     <div class="flex flex-col col-span-2">
                         <h1 class="text-2xl">Actors</h1>
                         <hr class="my-1" />
-                        <p>{{ $movie['Actors'] }}</p>
+                        <div class="flex gap-3 overflow-x-auto">
+                            @foreach ($actorsArray as $actor)
+                                <div class="flex flex-col items-center justify-center p-2 outline-1 outline-gray-500">
+                                    <img class="w-20 h-28 rounded-xl"
+                                        src={{ 'https://image.tmdb.org/t/p/w1280/' . $actor['profile_path'] }}
+                                        alt="">
+                                    <h1>{{ $actor['name'] }}</h1>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
@@ -124,7 +133,6 @@
                     <th scope="col" class="px-6 py-3">ID</th>
                     <th scope="col" class="px-6 py-3">User</th>
                     <th scope="col" class="px-6 py-3">Rating</th>
-                    <th scope="col" class="hidden px-6 py-3 lg:block">Comment</th>
                 </tr>
             </thead>
             <tbody>
@@ -133,17 +141,44 @@
                         <td class="px-6 py-4">{{ $rating->id }}</td>
                         <td class="px-6 py-4">{{ $rating->user()->first()->name }}</td>
                         <td class="px-6 py-4">{{ $rating->rating }}</td>
-                        <td class="hidden px-6 py-4 lg:block">{{ $rating->comment }}</td>
                     </tr>
                 @empty
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td class="px-6 py-4">No ratings yet.</td>
                         <td class="px-6 py-4">No ratings yet.</td>
                         <td class="px-6 py-4">No ratings yet.</td>
-                        <td class="hidden px-6 py-4 lg:block">No ratings yet.</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
+    </div>
+    <hr class="mt-4 mb-8">
+    <div class="flex flex-col items-center pb-10">
+        <h1 class="mb-8 text-4xl text-center text-white">Comments</h1>
+        <div class="grid w-full grid-cols-1 px-10 pb-40 lg:grid-cols-3 gap-x-20 max-w-7xl">
+            @forelse ($ratings->all() as $rating)
+                <blockquote class="p-4 mb-8 bg-gray-700 sm:flex lg:block rounded-xl">
+                    <svg width="24" height="18" viewBox="0 0 24 18" aria-hidden="true"
+                        class="flex-shrink-0 text-gray-300">
+                        <path
+                            d="M0 18h8.7v-5.555c-.024-3.906 1.113-6.841 2.892-9.68L6.452 0C3.188 2.644-.026 7.86 0 12.469V18zm12.408 0h8.7v-5.555C21.083 8.539 22.22 5.604 24 2.765L18.859 0c-3.263 2.644-6.476 7.86-6.451 12.469V18z"
+                            fill="currentColor" />
+                    </svg>
+                    <div class="px-6 mt-4 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-6">
+                        <p class="text-lg text-white">
+                            @if ($rating->comment)
+                                {{ $rating->comment }}
+                            @else
+                                Left no comment.
+                            @endif
+                        </p>
+                        <cite class="block mt-4 not-italic font-semibold text-gray-200 text-end"> -
+                            {{ $rating->user()->first()->name }}, {{ $rating->rating }}</cite>
+                    </div>
+                </blockquote>
+            @empty
+                <h1 class="col-span-3 text-xl text-center text-white">No comments.</h1>
+            @endforelse
+        </div>
     </div>
 </x-app-layout>
