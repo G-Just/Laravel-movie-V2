@@ -21,7 +21,7 @@
                                 ? true
                                 : false" />
                     @empty
-                        <h1>No ratings yet.</h1>
+                        <h1>Nothing here.</h1>
                     @endforelse
                     {{ $movies->links() }}
                 </div>
