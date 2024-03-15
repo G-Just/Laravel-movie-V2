@@ -1,7 +1,7 @@
 @props(['message', 'success'])
 
 <div id='message'
-    class="fixed bottom-10 left-1/2 -translate-x-1/2 block w-full max-w-screen-md px-4 py-4 text-base text-white @if ($success) bg-green-800 @else bg-red-800 @endif rounded-lg font-regular"
+    class="fixed bottom-10 left-1/2 -translate-x-1/2 block w-full max-w-screen-md px-4 py-4 text-base text-white @if ($success) bg-lime-700 @else bg-red-800 @endif rounded-lg font-regular"
     data-dismissible="alert">
     <div class="absolute top-4 left-4">
         @if ($success)

@@ -12,7 +12,7 @@
             <style>
                 .cls-1 {
                     fill: none;
-                    stroke: #999999;
+                    stroke: #84cc16;
                     stroke-miterlimit: 10;
                     stroke-width: 1px;
                 }

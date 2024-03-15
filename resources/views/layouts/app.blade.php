@@ -16,13 +16,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+<body class="overflow-x-hidden font-sans antialiased">
+    <div
+        class="h-screen w-screen text-white relative bg-[url('../../public/images/main_background.jpg')] bg-cover bg-no-repeat bg-fixed overflow-x-hidden">
         @include('layouts.navigation')
-
         <!-- Page Heading -->
         @if (isset($header))
-            <header class="bg-white shadow dark:bg-gray-800">
+            <header class="shadow dark:bg-neutral-900">
                 <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
@@ -33,6 +33,7 @@
         <main>
             {{ $slot }}
         </main>
+        <x-footer />
     </div>
     @if (session()->has('message'))
         <x-popup :message="session()->get('message')" :success="true" />
@@ -41,6 +42,5 @@
         <x-popup :message="session()->get('error')" :success="false" />
     @endif
 </body>
-<x-footer />
 
 </html>

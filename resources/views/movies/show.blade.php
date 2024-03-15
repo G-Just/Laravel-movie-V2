@@ -4,7 +4,7 @@
             {{ __('Add your rating') }}
         </h2>
     </x-slot>
-    <div class="relative overflow-hidden text-white border-white border-y-2">
+    <div class="relative overflow-hidden text-white border-white bg-neutral-950 border-y-2">
         <img class="absolute hidden w-full opacity-50 brightness-50 blur-sm lg:block" src={{ $backdrop }}
             alt="Backdrop" />
         <div class="relative z-10 py-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -74,7 +74,7 @@
             <x-input-error :messages="$errors->get('rating')" class="my-2" />
             <x-input-label class="mt-2" for="comment" :value="__('Leave a comment (optional)')" />
             <textarea
-                class="w-full mt-1 border-gray-300 rounded-md shadow-sm max-w-96 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                class="w-full mt-1 text-gray-300 rounded-md shadow-sm max-w-96 border-neutral-700 bg-neutral-900 focus:border-lime-600 focus:ring-lime-600"
                 name="comment" id="comment">{{ $ratings->firstWhere('user_id', Auth::user()->id)?->comment }}</textarea>
             <div class="flex justify-center gap-8">
                 @if ($ratings->firstWhere('user_id', Auth::user()->id))
@@ -152,25 +152,7 @@
         <h1 class="mb-8 text-4xl text-center text-white">Comments</h1>
         <div class="grid w-full grid-cols-1 px-10 pb-40 lg:grid-cols-3 gap-x-20 max-w-7xl">
             @forelse ($ratings->all() as $rating)
-                <blockquote class="p-4 mb-8 bg-gray-700 sm:flex lg:block rounded-xl">
-                    <svg width="24" height="18" viewBox="0 0 24 18" aria-hidden="true"
-                        class="flex-shrink-0 text-gray-300">
-                        <path
-                            d="M0 18h8.7v-5.555c-.024-3.906 1.113-6.841 2.892-9.68L6.452 0C3.188 2.644-.026 7.86 0 12.469V18zm12.408 0h8.7v-5.555C21.083 8.539 22.22 5.604 24 2.765L18.859 0c-3.263 2.644-6.476 7.86-6.451 12.469V18z"
-                            fill="currentColor" />
-                    </svg>
-                    <div class="px-6 mt-4 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-6">
-                        <p class="text-lg text-white">
-                            @if ($rating->comment)
-                                {{ $rating->comment }}
-                            @else
-                                Left no comment.
-                            @endif
-                        </p>
-                        <cite class="block mt-4 not-italic font-semibold text-gray-200 text-end"> -
-                            {{ $rating->user()->first()->name }}, {{ $rating->rating }}</cite>
-                    </div>
-                </blockquote>
+                <x-testimonial :comment="$rating->comment" :author="$rating->user()->first()->name" :rating="$rating->rating" />
             @empty
                 <h1 class="col-span-3 text-xl text-center text-white">No comments.</h1>
             @endforelse

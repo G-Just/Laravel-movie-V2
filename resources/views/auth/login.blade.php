@@ -1,47 +1,52 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required
-                autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+    <div class="flex w-screen h-screen overflow-hidden text-white">
+        <div class="flex flex-col items-center w-2/5 gap-8 py-20 text-center bg-neutral-950 max-2xl:w-3/5 max-lg:w-full">
+            <div class="mb-16">
+                <x-application-logo />
+                <p class="mt-2 font-bold tracking-wide">Movie Rating</p>
+            </div>
+            <form class="flex flex-col w-2/3 gap-10 max-sm:w-full max-sm:px-4 max-md:w-3/4" method="POST"
+                action="{{ route('login') }}">
+                @csrf
+                <div class="relative">
+                    <p class="absolute pt-0 pb-0 pl-2 pr-2 mb-0 ml-2 mr-0 -mt-2 font-medium bg-neutral-950">
+                        Email</p>
+                    <x-text-input placeholder="email@domain.com" type="text" name='email'
+                        class="block w-full py-4 pl-4 pr-4 mt-2 mb-0 ml-0 mr-0 text-base border rounded-md placeholder-neutral-700 focus:border-lime-300 bg-neutral-950 border-neutral-600" />
+                    @error('email')
+                        <p
+                            class="absolute pt-0 pb-0 pl-2 pr-2 mb-0 ml-2 mr-0 -mt-2 font-medium text-red-500 right-6 bg-neutral-950">
+                            {{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="relative">
+                    <p class="absolute pt-0 pb-0 pl-2 pr-2 mb-0 ml-2 mr-0 -mt-2 font-medium bg-neutral-950">
+                        Password</p>
+                    <x-text-input placeholder="Password" type="password" name='password'
+                        class="block w-full py-4 pl-4 pr-4 mt-2 mb-0 ml-0 mr-0 text-base border rounded-md placeholder-neutral-700 focus:border-lime-300 bg-neutral-950 border-neutral-600" />
+                    @error('password')
+                        <p
+                            class="absolute pt-0 pb-0 pl-2 pr-2 mb-0 ml-2 mr-0 -mt-2 font-medium text-red-500 right-6 bg-neutral-950">
+                            {{ $message }}</p>
+                    @enderror
+                </div>
+                <button
+                    class="px-8 py-4 my-8 font-bold text-black hover:bg-lime-500 bg-gradient-to-tr bg-lime-400 rounded-xl"
+                    type="submit">Login</button>
+                <p class="text-sm font-thin">By signing in at Movie Rating you confirm that you've read and
+                    accepted the
+                    <span><a href="" class="underline hover:text-lime-600 underline-offset-4">Terms of
+                            Service</a></span>
+                    and
+                    <span><a href="" class="underline hover:text-lime-600 underline-offset-4">Privacy
+                            Policy</a></span>.
+                </p>
+            </form>
+            <p class="text-sm">© {{ now()->year }} Movie Rating</p>
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block w-full mt-1" type="password" name="password" required
-                autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div
+            class="flex-grow bg-[url('../../public/images/login_background.jpg')] 
+    max-2xl:bg-[center_left_-300px] bg-no-repeat">
         </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox"
-                    class="text-indigo-600 border-gray-300 rounded shadow-sm dark:bg-gray-900 dark:border-gray-700 focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
-                    name="remember">
-                <span class="text-sm text-gray-600 ms-2 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="text-sm text-gray-600 underline rounded-md dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-                href="{{ route('register') }}">
-                {{ __('Don\'t have an account?') }}
-            </a>
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
+    </div>
 </x-guest-layout>

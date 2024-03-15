@@ -8,8 +8,8 @@
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <x-filtering-menu />
-            <div class="overflow-hidden bg-white shadow-sm dark:bg-slate-800 sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+            <div class="overflow-hidden shadow-sm bg-neutral-950 sm:rounded-lg">
+                <div class="p-6 text-gray-100">
                     <div class="mb-6">{{ $movies->links() }}</div>
                     @forelse ($movies as $movie)
                         <x-rated-movie-card :count="count($movie->ratings)" :imdbid="$movie['imdbID']" :title="$movie['title']" :year="$movie['year']"

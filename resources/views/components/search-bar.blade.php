@@ -2,7 +2,7 @@
     <div class="flex justify-center mb-4">
         <div class="flex justify-center px-2 w-full max-w-[600px]">
             <x-text-input name="search" class="w-full pl-8 rounded-l-full" placeholder="{{ __('Search...') }}" />
-            <div class="px-2 rounded-r-full bg-slate-600 outline-1 outline-gray-600 hover:bg-slate-700">
+            <div class="px-2 rounded-r-full bg-neutral-700 outline-1 outline-gray-600 hover:bg-lime-800">
                 <button type="submit" class="relative p-2">
                     <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
