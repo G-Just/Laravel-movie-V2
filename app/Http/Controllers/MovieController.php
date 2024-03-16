@@ -31,7 +31,7 @@ class MovieController extends Controller
             'alphabetical' => $movies->orderBy('title', 'desc'),
             'date' => $movies->orderBy('created_at', 'desc'),
             'date_a' => $movies->orderBy('created_at', 'asc'),
-            default => $movies
+            default => $movies->orderBy('created_at', 'desc')
         };
 
         $movies = match ($request->rated) {
