@@ -41,7 +41,7 @@ class MovieController extends Controller
             default => $movies
         };
 
-        $movies = $movies->paginate(6);
+        $movies = $movies->paginate(6)->appends(request()->query());
         return view('home', compact(['movies']));
     }
 
