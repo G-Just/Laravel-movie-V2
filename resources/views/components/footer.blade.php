@@ -1,5 +1,4 @@
-<div class="mx-auto">
-
+<div class="mx-auto mt-auto">
     <footer class="p-4 shadow md:flex md:items-center md:justify-between md:p-6 bg-neutral-950">
         <span class="text-sm text-gray-400 sm:text-center">© {{ now()->year }} <a href="https://movierating.000.pe/"
                 class="hover:underline" target="_blank"> Movie Rating™ </a>. All Rights

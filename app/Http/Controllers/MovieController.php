@@ -27,7 +27,10 @@ class MovieController extends Controller
 
         $movies = match ($request->sorting) {
             'rating' => $movies->orderBy('ratings_avg_rating', 'desc'),
-            'alphabetical' => $movies->orderBy('title'),
+            'rating_a' => $movies->orderBy('ratings_avg_rating', 'asc'),
+            'alphabetical' => $movies->orderBy('title', 'desc'),
+            'date' => $movies->orderBy('created_at', 'desc'),
+            'date_a' => $movies->orderBy('created_at', 'asc'),
             default => $movies
         };
 

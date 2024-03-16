@@ -9,9 +9,12 @@
                 <option value="not_rated" @if (request('rated') === 'not_rated') selected @endif>Not rated by me</option>
             </x-select-input>
             <x-select-input name="sorting" id="sorting">
-                <option value="date" @if (request('sorting') === 'date') selected @endif>Date added &darr;</option>
-                <option value="rating " @if (request('sorting') === 'rating') selected @endif>Rating &darr;</option>
-                <option value="alphabetical" @if (request('sorting') === 'alphabetical') selected @endif>Alphabetical &darr;
+                <option value="date" @if (request('sorting') === 'date') selected @endif>Newest
+                </option>
+                <option value="date_a" @if (request('sorting') === 'date_a') selected @endif>Oldest</option>
+                <option value="rating" @if (request('sorting') === 'rating') selected @endif>Rating descending</option>
+                <option value="rating_a" @if (request('sorting') === 'rating_a') selected @endif>Rating ascending</option>
+                <option value="alphabetical" @if (request('sorting') === 'alphabetical') selected @endif>Alphabetical
                 </option>
             </x-select-input>
         </div>
