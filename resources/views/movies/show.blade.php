@@ -122,8 +122,8 @@
     <hr class="mt-4 mb-8">
     <div class="flex flex-col items-center pb-10">
         <h1 class="mb-8 text-4xl text-center text-white">Ratings</h1>
-        <table class="w-1/2 text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <table class="w-1/2 text-sm text-left text-gray-400">
+            <thead class="text-xs text-gray-400 uppercase bg-neutral-700">
                 <tr>
                     <th scope="col" class="px-6 py-3">ID</th>
                     <th scope="col" class="px-6 py-3">User</th>
@@ -132,13 +132,13 @@
             </thead>
             <tbody>
                 @forelse ($ratings->all() as $rating)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr class="border-b bg-neutral-800 border-neutral-700 ">
                         <td class="px-6 py-4">{{ $rating->id }}</td>
                         <td class="px-6 py-4">{{ $rating->user()->first()->name }}</td>
                         <td class="px-6 py-4">{{ $rating->rating }}</td>
                     </tr>
                 @empty
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr class="border-b bg-neutral-800 border-neutral-700 ">
                         <td class="px-6 py-4">No ratings yet.</td>
                         <td class="px-6 py-4">No ratings yet.</td>
                         <td class="px-6 py-4">No ratings yet.</td>
