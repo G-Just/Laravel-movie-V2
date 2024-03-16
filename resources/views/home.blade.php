@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-6 lg:py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <x-filtering-menu />
             <div class="overflow-hidden shadow-sm bg-neutral-950 sm:rounded-lg">
