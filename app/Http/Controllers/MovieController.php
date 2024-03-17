@@ -102,8 +102,14 @@ class MovieController extends Controller
         foreach ($actors as $actor) {
             $actorsArray[$actor] = Http::get('https://api.themoviedb.org/3/search/person?query=' . $actor . '&include_adult=true&language=en-US&' . $this->tmdbKey)->collect('results')->first();
         }
-        $tmdbResponse = Http::get('https://api.themoviedb.org/3/search/multi?query=' . $movie['Title'] . '&include_adult=true&primary_release_year=' . $movie['Year'] . '&' . $this->tmdbKey)->collect();
+
+        $type = match ($movie['Type']) {
+            'movie' => 'movie',
+            default => 'multi'
+        };
+        $tmdbResponse = Http::get('https://api.themoviedb.org/3/search/' . $type . '?query=' . $movie['Title'] . '&include_adult=true&primary_release_year=' . $movie['Year'] . '&' . $this->tmdbKey)->collect();
         $backdrop = count($tmdbResponse->get('results')) === 0 ? 'https://dl.airtable.com/exploreCoverImages%2FCQDQ7kFRSJi1BYaN68YI_exploreCoverImages%252FXrQhMoZpQqeo0X5Q2t1W_4slz_rck6kq-lloyd-dirks.jpg' : 'https://image.tmdb.org/t/p/w1280/' . $tmdbResponse->get('results')[0]['backdrop_path'];
+
         $movieModel = Movie::query()->where('imdbID', '=', $id)->first();
         $ratings = $movieModel?->ratings;
         $ratings = isset($ratings) ? $ratings : collect([]);
