@@ -19,7 +19,7 @@
                                 ({{ $movie['Year'] }})
                             </span>
                         </h1>
-                        <p class="text-gray-500">
+                        <p class="text-gray-400">
                             {{ str_replace(',', ' | ', $movie['Genre']) }}
                             {{ ' ~ Runtime : ' }}
                             {{ $movie['Runtime'] }}
@@ -46,7 +46,7 @@
                     <div class="flex flex-col col-span-2">
                         <h1 class="text-2xl">Actors</h1>
                         <hr class="my-1" />
-                        <div class="flex gap-3 overflow-x-auto">
+                        <div class="flex overflow-x-auto">
                             @foreach ($actorsArray as $actor)
                                 <x-actor-card :image="$actor['profile_path']" :name="$actor['name']" />
                             @endforeach
@@ -57,8 +57,8 @@
         </div>
     </div>
     <div class="flex flex-col items-center w-full gap-4 py-10">
-        <h1 class="text-4xl text-center text-white">Add your rating</h1>
-        <form class="flex flex-col items-center w-full" action={{ route('movies.store') }} method="POST">
+        <h1 class="text-5xl text-center text-white">Add your rating</h1>
+        <form class="flex flex-col items-center w-full mt-4" action={{ route('movies.store') }} method="POST">
             @csrf
             <input type="hidden" name="title" value="{{ $movie['Title'] }}" />
             <input type="hidden" name="imdbID" value="{{ $movie['imdbID'] }}" />
@@ -121,7 +121,7 @@
     </div>
     <hr class="mt-4 mb-8">
     <div class="flex flex-col items-center pb-10">
-        <h1 class="mb-8 text-4xl text-center text-white">Ratings</h1>
+        <h1 class="mb-8 text-5xl text-center text-white">Ratings</h1>
         <table class="w-1/2 text-sm text-left text-gray-400">
             <thead class="text-xs text-gray-400 uppercase bg-neutral-700">
                 <tr>
@@ -149,7 +149,7 @@
     </div>
     <hr class="mt-4 mb-8">
     <div class="flex flex-col items-center pb-10">
-        <h1 class="mb-8 text-4xl text-center text-white">Comments</h1>
+        <h1 class="mb-8 text-5xl text-center text-white">Comments</h1>
         <div class="grid w-full grid-cols-1 px-10 pb-40 lg:grid-cols-3 gap-x-20 max-w-7xl">
             @forelse ($ratings->all() as $rating)
                 <x-testimonial :comment="$rating->comment" :author="$rating->user()->first()->name" :rating="$rating->rating" />

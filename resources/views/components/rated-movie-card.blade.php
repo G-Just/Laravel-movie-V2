@@ -1,11 +1,11 @@
 @props(['count', 'imdbid', 'title', 'year', 'genre', 'plot', 'poster', 'runtime', 'rating', 'rated'])
 
 <a href={{ 'movies/' . $imdbid }}>
-    <div class="flex flex-col gap-4 p-2 mb-8 border-2 border-lime-400 lg:flex-row">
+    <div class="flex flex-col gap-4 p-2 mb-8 border-2 border-neutral-700 lg:flex-row">
         <img class="h-[300px] mx-auto w-[200px]"
             src={{ $poster === 'N/A' ? 'https://www.prokerala.com/movies/assets/img/no-poster-available.jpg' : $poster }}
             alt="Poster" />
-        <div class="flex flex-col p-4 border-b-2 border-r-0 lg:pr-4 lg:border-b-0 lg:border-r-2 border-lime-400">
+        <div class="flex flex-col p-4 border-b-2 border-r-0 lg:pr-4 lg:border-b-0 lg:border-r-2 border-neutral-700">
             <div class="flex flex-col lg:flex-row">
                 <div class="flex">
                     <h1 class="text-4xl font-bold max-w-[400px]">{{ $title }}</h1>
@@ -22,7 +22,7 @@
             </p>
             <p class="mt-2 lg:mt-8 line-clamp-3 lg:line-clamp-4">{{ $plot }}</p>
             <div class="flex items-end flex-1">
-                <div class="flex">
+                <div class="flex pt-2 lg:pt-0">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 mr-2 text-base text-lime-300">
                         <path stroke-linecap="round" stroke-linejoin="round"
