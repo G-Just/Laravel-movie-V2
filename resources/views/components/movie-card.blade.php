@@ -1,6 +1,6 @@
 @props(['id', 'poster', 'title', 'year', 'type'])
 
-<a href={{ $id }}>
+<a href={{ route('movies.show', ['id' => $id]) }}>
     <div class="flex justify-center mb-8">
         <div class="flex flex-col items-center w-[300px]">
             <img class="w-[300px] h-[450px]"

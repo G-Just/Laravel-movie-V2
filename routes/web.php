@@ -24,9 +24,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->prefix('/movies')->name('movies.')->group(function () {
     Route::get('/new', [MovieController::class, 'new'])->name('new');
-    Route::get('/{id}', [MovieController::class, 'show'])->name('show');
+    Route::get('/show/{id}', [MovieController::class, 'show'])->name('show');
     Route::post('/store', [MovieController::class, 'store'])->name('store');
     Route::post('/destroy', [MovieController::class, 'destroy'])->name('destroy');
+    Route::get('/popular', [MovieController::class, 'popular'])->name('popular');
 });
 
 Route::middleware('auth')->group(function () {

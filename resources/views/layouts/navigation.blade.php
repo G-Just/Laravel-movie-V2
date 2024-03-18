@@ -15,7 +15,10 @@
                         {{ __('Home') }}
                     </x-nav-link>
                     <x-nav-link :href="route('movies.new')" :active="request()->routeIs('movies.new')">
-                        {{ __('Add a movie') }}
+                        {{ __('Rate') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('movies.popular')" :active="request()->routeIs('movies.popular')">
+                        {{ __('Popular') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -81,7 +84,10 @@
                 {{ __('Home') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('movies.new')" :active="request()->routeIs('movies.new')">
-                {{ __('Add a movie') }}
+                {{ __('Rate') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('movies.popular')" :active="request()->routeIs('movies.popular')">
+                {{ __('Popular') }}
             </x-responsive-nav-link>
         </div>
 
