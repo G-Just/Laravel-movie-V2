@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRequest;
 use App\Models\Movie;
 use App\Models\Rating;
 use Illuminate\Http\Request;
@@ -13,10 +14,8 @@ class MovieController extends Controller
 
     private $omdb = 'https://www.omdbapi.com/?apikey=fae14715&';
     private $tmdbKey = 'api_key=a775215dabc13c77e7e60049fd00e7be';
+    private $defaultBackdrop = 'https://dl.airtable.com/exploreCoverImages%2FCQDQ7kFRSJi1BYaN68YI_exploreCoverImages%252FXrQhMoZpQqeo0X5Q2t1W_4slz_rck6kq-lloyd-dirks.jpg';
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $movies = Movie::withAvg('ratings', 'rating');
@@ -28,7 +27,7 @@ class MovieController extends Controller
         $movies = match ($request->sorting) {
             'rating' => $movies->orderBy('ratings_avg_rating', 'desc'),
             'rating_a' => $movies->orderBy('ratings_avg_rating', 'asc'),
-            'alphabetical' => $movies->orderBy('title', 'desc'),
+            'alphabetical' => $movies->orderBy('title'),
             'date' => $movies->orderBy('created_at', 'desc'),
             'date_a' => $movies->orderBy('created_at', 'asc'),
             default => $movies->orderBy('created_at', 'desc')
@@ -45,8 +44,10 @@ class MovieController extends Controller
         };
 
         $movies = $movies->paginate(6)->appends(request()->query());
-        return view('home', compact(['movies']));
+        $sorts = Movie::getSorts();
+        return view('home', compact(['movies', 'sorts']));
     }
+
 
     public function popular(Request $request)
     {
@@ -67,38 +68,23 @@ class MovieController extends Controller
         return view('movies.popular', compact('content'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function new(Request $request)
     {
         if ($request->has('search')) {
             $movies = Http::get($this->omdb . 's=' . $request->get('search'))->collect('Search')->all();
         } else {
-            $movies = Http::get($this->omdb . 's=super')->collect('Search')->all();
+            $movies = Http::get($this->omdb . 's=batman')->collect('Search')->all();
         }
         return view('movies.new', compact(['movies']));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $validatedRating = $request->validate([
-            'rating' => 'numeric | min:0 | max:10',
-            'comment' => 'nullable'
-        ]);
 
-        $movieValidated = $request->validate([
-            'title' => 'present',
-            'imdbID' => 'present',
-            'year' => 'present',
-            'genre' => 'present',
-            'plot' => 'present',
-            'poster' => 'present',
-            'runtime' => 'present'
-        ]);
+    public function store(StoreRequest $request)
+    {
+        $validatedRating = $request->safe()->only(['rating', 'comment']);
+
+        $movieValidated = $request->safe()->except(['rating', 'comment']);
 
         $movie = Movie::firstOrCreate($movieValidated);
 
@@ -110,43 +96,52 @@ class MovieController extends Controller
         return redirect()->route('home')->with('message', 'Rating submitted successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
         $movie = Http::get($this->omdb . 'i=' . $id . '&plot=full')->collect()->all();
         $actors = explode(', ', $movie['Actors']);
         $actorsArray = [];
+
         foreach ($actors as $actor) {
-            $actorsArray[$actor] = Http::get('https://api.themoviedb.org/3/search/person?query=' . $actor . '&include_adult=true&language=en-US&' . $this->tmdbKey)->collect('results')->first();
+            $actorsArray[$actor] = Http::get('https://api.themoviedb.org/3/search/person?query='
+                . $actor
+                . '&include_adult=true&language=en-US&'
+                . $this->tmdbKey)->collect('results')->first();
         }
 
         $type = match ($movie['Type']) {
             'movie' => 'movie',
             default => 'multi'
         };
-        $tmdbResponse = Http::get('https://api.themoviedb.org/3/search/' . $type . '?query=' . $movie['Title'] . '&include_adult=true&primary_release_year=' . $movie['Year'] . '&' . $this->tmdbKey)->collect();
-        $backdrop = count($tmdbResponse->get('results')) === 0 ? 'https://dl.airtable.com/exploreCoverImages%2FCQDQ7kFRSJi1BYaN68YI_exploreCoverImages%252FXrQhMoZpQqeo0X5Q2t1W_4slz_rck6kq-lloyd-dirks.jpg' : 'https://image.tmdb.org/t/p/w1280/' . $tmdbResponse->get('results')[0]['backdrop_path'];
+
+        $tmdbResponse = Http::get('https://api.themoviedb.org/3/search/'
+            . $type . '?query=' . $movie['Title'] . '&include_adult=true&primary_release_year='
+            . $movie['Year']
+            . '&'
+            . $this->tmdbKey)->collect();
+
+        $backdrop = count($tmdbResponse->get('results')) === 0
+            ? $this->defaultBackdrop
+            : 'https://image.tmdb.org/t/p/w1280/' . $tmdbResponse->get('results')[0]['backdrop_path'];
 
         $movieModel = Movie::query()->where('imdbID', '=', $id)->first();
         $ratings = $movieModel?->ratings;
         $ratings = isset($ratings) ? $ratings : collect([]);
+
         return view('movies.show', compact(['movie', 'backdrop', 'ratings', 'actorsArray']));
     }
 
-    public function reset()
-    {
-        return redirect()->route('home');
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Request $request)
     {
         $movie = Movie::query()->where('imdbID', '=', $request->imdbID)->first();
         $movie->find($movie->id)->ratings()->where('user_id', '=', $request->user_id)->first()->delete();
         return redirect()->route('home')->with('message', 'Your rating deleted successfully');
+    }
+
+    public function reset()
+    {
+        return redirect()->route('home');
     }
 }
