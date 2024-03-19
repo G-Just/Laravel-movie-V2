@@ -1,3 +1,5 @@
+@props(['sorts'])
+
 <div class="flex flex-col justify-center px-8 py-4 mb-8 rounded-lg lg:flex-row bg-neutral-950">
     <form action={{ route('home') }} method="get" class="flex flex-col items-center justify-between w-full lg:flex-row">
         <div class="flex flex-col gap-4 lg:gap-8 lg:flex-row">
@@ -9,13 +11,17 @@
                 <option value="not_rated" @if (request('rated') === 'not_rated') selected @endif>Not rated by me</option>
             </x-select-input>
             <x-select-input name="sorting" id="sorting">
-                <option value="date" @if (request('sorting') === 'date') selected @endif>Newest
+                {{-- <option value="date" @if (request('sorting') === 'date') selected @endif>Newest
                 </option>
                 <option value="date_a" @if (request('sorting') === 'date_a') selected @endif>Oldest</option>
                 <option value="rating" @if (request('sorting') === 'rating') selected @endif>Rating descending</option>
                 <option value="rating_a" @if (request('sorting') === 'rating_a') selected @endif>Rating ascending</option>
                 <option value="alphabetical" @if (request('sorting') === 'alphabetical') selected @endif>Alphabetical
-                </option>
+                </option> --}}
+                @foreach ($sorts as $key => $sort)
+                    <option value={{ $key }} @if (request('sorting') === $key) selected @endif>
+                        {{ $sort }}</option>
+                @endforeach
             </x-select-input>
         </div>
         <div class="gap-4">

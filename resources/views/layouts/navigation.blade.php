@@ -11,13 +11,13 @@
                 </div>
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                    <x-nav-link class="text-lg" :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Home') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('movies.new')" :active="request()->routeIs('movies.new')">
+                    <x-nav-link class="text-lg" :href="route('movies.new')" :active="request()->routeIs('movies.new')">
                         {{ __('Rate') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('movies.popular')" :active="request()->routeIs('movies.popular')">
+                    <x-nav-link class="text-lg" :href="route('movies.popular')" :active="request()->routeIs('movies.popular')">
                         {{ __('Popular') }}
                     </x-nav-link>
                 </div>

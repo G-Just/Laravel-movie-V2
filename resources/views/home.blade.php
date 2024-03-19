@@ -7,7 +7,7 @@
 
     <div class="py-6 lg:py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <x-filtering-menu />
+            <x-filtering-menu :sorts="$sorts" />
             <div class="overflow-hidden shadow-sm bg-neutral-950 sm:rounded-lg">
                 <div class="p-6 text-gray-100">
                     <div class="mb-6">{{ $movies->links() }}</div>
