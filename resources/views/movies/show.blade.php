@@ -61,7 +61,7 @@
         <div class="flex w-full gap-8 px-10 py-4 overflow-x-auto">
             @forelse ($videos as $name => $video)
                 <div>
-                    <iframe width="560" height="315" src={{ 'http://www.youtube.com/embed/' . $video }}
+                    <iframe width="560" height="315" src={{ 'https://www.youtube.com/embed/' . $video }}
                         title={{ $name }} frameborder="0" allowfullscreen></iframe>
                 </div>
             @empty

@@ -129,12 +129,17 @@ class MovieController extends Controller
         $ratings = $movieModel?->ratings;
         $ratings = isset($ratings) ? $ratings : collect([]);
 
-        $tmdbVideosResponse = Http::get('https://api.themoviedb.org/3/movie/' . $tmdbResponse->get('results')[0]['id'] . '/videos'
-            . '?'
-            . $this->tmdbKey)->collect('results');
+        if (in_array('tv', $tmdbResponse->get('results')[0])) {
+            $tmdbVideosResponse = Http::get('https://api.themoviedb.org/3/tv/' . $tmdbResponse->get('results')[0]['id'] . '/videos'
+                . '?'
+                . $this->tmdbKey)->collect('results');
+        } else {
+            $tmdbVideosResponse = Http::get('https://api.themoviedb.org/3/movie/' . $tmdbResponse->get('results')[0]['id'] . '/videos'
+                . '?'
+                . $this->tmdbKey)->collect('results');
+        }
 
         $videos = [];
-
         foreach ($tmdbVideosResponse as $video) {
             if ($video['site'] === 'YouTube') {
                 $videos[$video['name']] = $video['key'];
