@@ -46,7 +46,7 @@
                     <div class="flex flex-col col-span-2">
                         <h1 class="text-2xl">Actors</h1>
                         <hr class="my-1" />
-                        <div class="flex overflow-x-auto">
+                        <div class="flex gap-4 overflow-x-auto lg:gap-0">
                             @foreach ($actors as $actor)
                                 <x-actor-card :image="$actor['profile_path']" :name="$actor['name']" />
                             @endforeach
@@ -58,11 +58,12 @@
     </div>
     <div class="flex flex-col items-center w-full gap-4 py-10">
         <h1 class="text-5xl text-center text-white">Media</h1>
-        <div class="flex w-full gap-8 px-10 py-4 overflow-x-auto">
+        <div class="flex w-full gap-8 px-1 py-4 overflow-x-auto lg:px-10">
             @forelse ($videos as $name => $video)
                 <div>
-                    <iframe width="560" height="315" src={{ 'https://www.youtube.com/embed/' . $video }}
-                        title={{ $name }} frameborder="0" allowfullscreen></iframe>
+                    <iframe class="w-[300px] h-[190px] lg:w-[560px] lg:h-[315px]"
+                        src={{ 'https://www.youtube.com/embed/' . $video }} title={{ $name }} frameborder="0"
+                        allowfullscreen></iframe>
                 </div>
             @empty
                 <div class="w-full">
@@ -73,7 +74,7 @@
     </div>
     <hr class="mt-4 mb-8">
     <div class="flex flex-col items-center w-full gap-4 py-10">
-        <div class="w-1/3 p-4 py-10 border rounded-xl border-neutral-600 bg-neutral-900">
+        <div class="p-4 py-10 border lg:w-1/3 rounded-xl border-neutral-600 bg-neutral-900">
             <h1 class="text-5xl text-center text-white">Add your rating</h1>
             <form class="flex flex-col items-center w-full mt-4" action={{ route('movies.store') }} method="POST">
                 @csrf
