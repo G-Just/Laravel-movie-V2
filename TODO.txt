@@ -1,3 +1,3 @@
 Add trailers / images / other media in the show page. ✔
 
-FIXME: The "popular" page for most popular movies and shows page is extremely slow because its pulling api for each and every one of the movies/shows. Need to optimize this somehow. Maybe find the group of popular in TMDB?
+FIXME: The "popular" page for most popular movies and shows page is extremely slow because its pulling api for each and every one of the movies/shows. Need to optimize this somehow.
