@@ -11,7 +11,12 @@ class TmdbApiService
 
     public function getSearch(string $type, string|int $query, array|null $options = null): array
     {
-        $type === 'series' ? $type = 'tv' : $type;
+        $type = match ($type) {
+            'series' => 'tv',
+            'movie' => 'movie',
+            'person' => 'person',
+            default => 'multi'
+        };
 
         $params = '';
         if ($options) {
@@ -25,7 +30,7 @@ class TmdbApiService
             . '&include_adult=true&language=en-US'
             . $params
             . '&'
-            . $this->tmdbKey)->collect('results')->toArray()[0];
+            . $this->tmdbKey)->collect('results')->toArray();
     }
 
     public function getActors(array $actors): array
@@ -33,7 +38,7 @@ class TmdbApiService
         $actorsArray = [];
 
         foreach ($actors as $actor) {
-            $actorsArray[$actor] = $this->getSearch('person', $actor);
+            $actorsArray[$actor] = $this->getSearch('person', $actor)[0];
         }
 
         return $actorsArray;
@@ -41,7 +46,7 @@ class TmdbApiService
 
     public function getBackdrop(string $type, string $title, string $year): string
     {
-        $tmdbResponse = $this->getSearch($type, $title, ['primary_release_year' => $year]);
+        $tmdbResponse = $this->getSearch($type, $title, ['primary_release_year' => $year])[0];
 
         $backdrop = count($tmdbResponse) === 0 || $tmdbResponse['backdrop_path'] === null
             ? $this->defaultBackdrop
@@ -52,7 +57,7 @@ class TmdbApiService
 
     public function getVideos(string $type, string $title, string $year): array
     {
-        $tmdbResponse = $this->getSearch($type, $title, ['primary_release_year' => $year]);
+        $tmdbResponse = $this->getSearch($type, $title, ['primary_release_year' => $year])[0];
 
         $type === 'series' ? $type = 'tv' : $type;
 
@@ -74,5 +79,26 @@ class TmdbApiService
         };
 
         return $videos;
+    }
+
+    public function getPopular(string $type)
+    {
+        if ($type === 'shows') {
+            $content = Http::get('https://api.themoviedb.org/3/trending/tv/week?' . $this->tmdbKey)->collect('results')->toArray();
+            foreach ($content as $key => $movie) {
+                $content[$key]['imdbID'] = Http::get('https://api.themoviedb.org/3/tv/' . $movie['id'] . '/external_ids?' . $this->tmdbKey)->collect('imdb_id')->first();
+                $content[$key]['title'] = $content[$key]['name'];
+                $content[$key]['release_date'] = $content[$key]['first_air_date'];
+                $content[$key]['type'] = 'Show';
+            }
+        } else {
+            $content = Http::get('https://api.themoviedb.org/3/movie/popular?' . $this->tmdbKey)->collect('results')->toArray();
+            foreach ($content as $key => $movie) {
+                $content[$key]['imdbID'] = Http::get('https://api.themoviedb.org/3/movie/' . $movie['id'] . '/external_ids?' . $this->tmdbKey)->collect('imdb_id')->first();
+                $content[$key]['type'] = 'Movie';
+            }
+        }
+
+        return $content;
     }
 }

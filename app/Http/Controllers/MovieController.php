@@ -9,14 +9,9 @@ use App\Services\OmdbApiService;
 use App\Services\TmdbApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 
 class MovieController extends Controller
 {
-
-    private $tmdbKey = 'api_key=a775215dabc13c77e7e60049fd00e7be';
-
-
     public function index(Request $request)
     {
         $movies = Movie::withAvg('ratings', 'rating');
@@ -50,23 +45,10 @@ class MovieController extends Controller
     }
 
 
-    public function popular(Request $request)
+    public function popular(Request $request, TmdbApiService $tmdb)
     {
-        // FIXME: Fix this by using TMDB popular list api call
-        if ($request->type === 'shows') {
-            $content = Http::get('https://api.themoviedb.org/3/trending/tv/week?' . $this->tmdbKey)->collect('results')->toArray();
-            foreach ($content as $key => $movie) {
-                $content[$key]['imdbID'] = Http::get('https://api.themoviedb.org/3/tv/' . $movie['id'] . '/external_ids?' . $this->tmdbKey)->collect('imdb_id')->first();
-                $content[$key]['title'] = $content[$key]['name'];
-                $content[$key]['release_date'] = $content[$key]['first_air_date'];
-                $content[$key]['media_type'] = 'Show';
-            }
-        } else {
-            $content = Http::get('https://api.themoviedb.org/3/trending/movie/week?' . $this->tmdbKey)->collect('results')->toArray();
-            foreach ($content as $key => $movie) {
-                $content[$key]['imdbID'] = Http::get('https://api.themoviedb.org/3/movie/' . $movie['id'] . '/external_ids?' . $this->tmdbKey)->collect('imdb_id')->first();
-            }
-        }
+        $content = $tmdb->getPopular($request->type ?? 'movies');
+
         return view('movies.popular', compact('content'));
     }
 

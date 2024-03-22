@@ -21,7 +21,7 @@
                 <div class="grid grid-cols-1 py-4 text-white lg:grid-cols-3 gap-x-8">
                     @forelse ($content as $movie)
                         <x-movie-card :id="$movie['imdbID']" :poster="'https://image.tmdb.org/t/p/w1280/' . $movie['poster_path']" :title="$movie['title']" :year="explode('-', $movie['release_date'])[0]"
-                            :type="$movie['media_type']" />
+                            :type="$movie['type']" />
                     @empty
                         <h1>Nothing here.</h1>
                     @endforelse
