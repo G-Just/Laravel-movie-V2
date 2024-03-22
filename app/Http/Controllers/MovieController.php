@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRequest;
 use App\Models\Movie;
 use App\Models\Rating;
+use App\Services\OmdbApiService;
+use App\Services\TmdbApiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -12,9 +14,8 @@ use Illuminate\Support\Facades\Http;
 class MovieController extends Controller
 {
 
-    private $omdb = 'https://www.omdbapi.com/?apikey=fae14715&';
     private $tmdbKey = 'api_key=a775215dabc13c77e7e60049fd00e7be';
-    private $defaultBackdrop = 'https://dl.airtable.com/exploreCoverImages%2FCQDQ7kFRSJi1BYaN68YI_exploreCoverImages%252FXrQhMoZpQqeo0X5Q2t1W_4slz_rck6kq-lloyd-dirks.jpg';
+
 
     public function index(Request $request)
     {
@@ -51,6 +52,7 @@ class MovieController extends Controller
 
     public function popular(Request $request)
     {
+        // FIXME: Fix this by using TMDB popular list api call
         if ($request->type === 'shows') {
             $content = Http::get('https://api.themoviedb.org/3/trending/tv/week?' . $this->tmdbKey)->collect('results')->toArray();
             foreach ($content as $key => $movie) {
@@ -69,12 +71,12 @@ class MovieController extends Controller
     }
 
 
-    public function new(Request $request)
+    public function new(Request $request, OmdbApiService $omdb)
     {
         if ($request->has('search')) {
-            $movies = Http::get($this->omdb . 's=' . $request->get('search'))->collect('Search')->all();
+            $movies = $omdb->search($request->search);
         } else {
-            $movies = Http::get($this->omdb . 's=batman')->collect('Search')->all();
+            $movies = $omdb->search('Batman');
         }
         return view('movies.new', compact(['movies']));
     }
@@ -97,56 +99,18 @@ class MovieController extends Controller
     }
 
 
-    public function show(string $id)
+    public function show(string $id, OmdbApiService $omdb, TmdbApiService $tmdb)
     {
-        $movie = Http::get($this->omdb . 'i=' . $id . '&plot=full')->collect()->all();
-        $actors = explode(', ', $movie['Actors']);
-        $actorsArray = [];
-
-        foreach ($actors as $actor) {
-            $actorsArray[$actor] = Http::get('https://api.themoviedb.org/3/search/person?query='
-                . $actor
-                . '&include_adult=true&language=en-US&'
-                . $this->tmdbKey)->collect('results')->first();
-        }
-
-        $type = match ($movie['Type']) {
-            'movie' => 'movie',
-            default => 'multi'
-        };
-
-        $tmdbResponse = Http::get('https://api.themoviedb.org/3/search/'
-            . $type . '?query=' . $movie['Title'] . '&include_adult=true&primary_release_year='
-            . $movie['Year']
-            . '&'
-            . $this->tmdbKey)->collect();
-
-        $backdrop = count($tmdbResponse->get('results')) === 0
-            ? $this->defaultBackdrop
-            : 'https://image.tmdb.org/t/p/w1280/' . $tmdbResponse->get('results')[0]['backdrop_path'];
+        $movie = $omdb->getById($id);
+        $actors = $tmdb->getActors(explode(', ', $movie['Actors']));
+        $backdrop = $tmdb->getBackdrop($movie['Type'], $movie['Title'], $movie['Year']);
+        $videos = $tmdb->getVideos($movie['Type'], $movie['Title'], $movie['Year']);
 
         $movieModel = Movie::query()->where('imdbID', '=', $id)->first();
         $ratings = $movieModel?->ratings;
         $ratings = isset($ratings) ? $ratings : collect([]);
 
-        if (in_array('tv', $tmdbResponse->get('results')[0])) {
-            $tmdbVideosResponse = Http::get('https://api.themoviedb.org/3/tv/' . $tmdbResponse->get('results')[0]['id'] . '/videos'
-                . '?'
-                . $this->tmdbKey)->collect('results');
-        } else {
-            $tmdbVideosResponse = Http::get('https://api.themoviedb.org/3/movie/' . $tmdbResponse->get('results')[0]['id'] . '/videos'
-                . '?'
-                . $this->tmdbKey)->collect('results');
-        }
-
-        $videos = [];
-        foreach ($tmdbVideosResponse as $video) {
-            if ($video['site'] === 'YouTube') {
-                $videos[$video['name']] = $video['key'];
-            }
-        };
-
-        return view('movies.show', compact(['movie', 'backdrop', 'ratings', 'actorsArray', 'videos']));
+        return view('movies.show', compact(['movie', 'backdrop', 'ratings', 'actors', 'videos']));
     }
 
 
@@ -156,6 +120,7 @@ class MovieController extends Controller
         $movie->find($movie->id)->ratings()->where('user_id', '=', $request->user_id)->first()->delete();
         return redirect()->route('home')->with('message', 'Your rating deleted successfully');
     }
+
 
     public function reset()
     {

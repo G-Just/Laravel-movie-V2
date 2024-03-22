@@ -47,7 +47,7 @@
                         <h1 class="text-2xl">Actors</h1>
                         <hr class="my-1" />
                         <div class="flex overflow-x-auto">
-                            @foreach ($actorsArray as $actor)
+                            @foreach ($actors as $actor)
                                 <x-actor-card :image="$actor['profile_path']" :name="$actor['name']" />
                             @endforeach
                         </div>
@@ -65,7 +65,9 @@
                         title={{ $name }} frameborder="0" allowfullscreen></iframe>
                 </div>
             @empty
-                <h1>No media found.</h1>
+                <div class="w-full">
+                    <h1 class="text-2xl text-center">No media found.</h1>
+                </div>
             @endforelse
         </div>
     </div>
@@ -134,8 +136,8 @@
     </form>
     @endif
     </div>
-    <hr class="mt-4 mb-8">
-    <div class="flex flex-col items-center pb-10">
+    <hr class="w-full mt-4 mb-8">
+    <div class="flex flex-col items-center w-full pb-10">
         <h1 class="mb-8 text-5xl text-center text-white">Ratings</h1>
         <table class="w-1/2 text-sm text-left text-gray-400">
             <thead class="text-xs text-gray-400 uppercase bg-neutral-700">
@@ -162,8 +164,8 @@
             </tbody>
         </table>
     </div>
-    <hr class="mt-4 mb-8">
-    <div class="flex flex-col items-center pb-10">
+    <hr class="w-full mt-4 mb-8">
+    <div class="flex flex-col items-center w-full pb-10">
         <h1 class="mb-8 text-5xl text-center text-white">Comments</h1>
         <div class="grid w-full grid-cols-1 px-10 pb-40 lg:grid-cols-3 gap-x-20 max-w-7xl">
             @forelse ($ratings->all() as $rating)
