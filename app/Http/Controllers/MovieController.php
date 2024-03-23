@@ -41,7 +41,7 @@ class MovieController extends Controller
 
         $movies = $movies->paginate(6)->appends(request()->query());
         $sorts = Movie::getSorts();
-        return view('home', compact(['movies', 'sorts']));
+        return view('list', compact(['movies', 'sorts']));
     }
 
 
@@ -77,7 +77,7 @@ class MovieController extends Controller
 
         Rating::updateOrCreate($ids, $validatedRating);
 
-        return redirect()->route('home')->with('message', 'Rating submitted successfully');
+        return redirect()->route('list')->with('message', 'Rating submitted successfully');
     }
 
 
@@ -100,12 +100,12 @@ class MovieController extends Controller
     {
         $movie = Movie::query()->where('imdbID', '=', $request->imdbID)->first();
         $movie->find($movie->id)->ratings()->where('user_id', '=', $request->user_id)->first()->delete();
-        return redirect()->route('home')->with('message', 'Your rating deleted successfully');
+        return redirect()->route('list')->with('message', 'Your rating deleted successfully');
     }
 
 
     public function reset()
     {
-        return redirect()->route('home');
+        return redirect()->route('list');
     }
 }

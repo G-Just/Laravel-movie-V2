@@ -15,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('home');
+})->name('home');
+
 Route::middleware('auth')->group(function () {
-    Route::get('/', [MovieController::class, 'index'])->name('home');
-    Route::get('/home', [MovieController::class, 'index'])->name('home');
-    Route::post('/home', [MovieController::class, 'reset'])->name('reset');
+    Route::get('/list', [MovieController::class, 'index'])->name('list');
+    Route::post('/list', [MovieController::class, 'reset'])->name('reset');
 });
 
 
