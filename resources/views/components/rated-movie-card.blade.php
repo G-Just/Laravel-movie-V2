@@ -1,6 +1,6 @@
 @props(['count', 'imdbid', 'title', 'year', 'genre', 'plot', 'poster', 'runtime', 'rating', 'rated'])
 
-<a href={{ 'movies/show/' . $imdbid }}>
+<a href={{ route('movies.show', $imdbid) }}>
     <div class="flex flex-col gap-4 p-2 mb-8 border-2 border-neutral-700 lg:flex-row">
         <img class="h-[300px] mx-auto w-[200px]"
             src={{ $poster === 'N/A' ? 'https://www.prokerala.com/movies/assets/img/no-poster-available.jpg' : $poster }}

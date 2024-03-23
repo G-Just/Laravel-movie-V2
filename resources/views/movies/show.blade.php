@@ -58,7 +58,7 @@
     </div>
     <div class="flex flex-col items-center w-full gap-4 py-10">
         <h1 class="text-5xl text-center text-white">Media</h1>
-        <div class="flex w-full gap-8 px-1 py-4 overflow-x-auto lg:px-10">
+        <div class="flex w-full gap-8 px-1 py-4 overflow-x-auto lg:px-10 bg-neutral-800">
             @forelse ($videos as $name => $video)
                 <div>
                     <iframe class="w-[300px] h-[190px] lg:w-[560px] lg:h-[315px]"
@@ -140,7 +140,7 @@
     <hr class="w-full mt-4 mb-8">
     <div class="flex flex-col items-center w-full pb-10">
         <h1 class="mb-8 text-5xl text-center text-white">Ratings</h1>
-        <table class="w-1/2 text-sm text-left text-gray-400">
+        <table class="w-full text-sm text-left text-gray-400 lg:w-1/2">
             <thead class="text-xs text-gray-400 uppercase bg-neutral-700">
                 <tr>
                     <th scope="col" class="px-6 py-3">ID</th>
@@ -157,9 +157,9 @@
                     </tr>
                 @empty
                     <tr class="border-b bg-neutral-800 border-neutral-700 ">
-                        <td class="px-6 py-4">No ratings yet.</td>
-                        <td class="px-6 py-4">No ratings yet.</td>
-                        <td class="px-6 py-4">No ratings yet.</td>
+                        <td class="px-6 py-4">-</td>
+                        <td class="px-6 py-4">-</td>
+                        <td class="px-6 py-4">-</td>
                     </tr>
                 @endforelse
             </tbody>

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-})->name('home');
+})->name('home')->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/list', [MovieController::class, 'index'])->name('list');
@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware('auth')->prefix('/movies')->name('movies.')->group(function () {
+Route::middleware('auth')->prefix('/content')->name('movies.')->group(function () {
     Route::get('/new', [MovieController::class, 'new'])->name('new');
     Route::get('/show/{id}', [MovieController::class, 'show'])->name('show');
     Route::post('/store', [MovieController::class, 'store'])->name('store');
