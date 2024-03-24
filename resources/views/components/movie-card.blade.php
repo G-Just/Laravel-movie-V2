@@ -1,6 +1,14 @@
-@props(['id', 'poster', 'title', 'year', 'type'])
+@props(['id', 'poster', 'title', 'year', 'type', 'db'])
 
-<a href={{ route('movies.show', ['id' => $id]) }}>
+<a
+    href=@if ($db === 'omdb') {{ route('movies.show', ['id' => $id]) }} 
+    @else {{ route('movies.showTMDB', [
+        'id' => $id,
+        'type' => match ($type) {
+            'Movie' => 'movie',
+            'Show' => 'tv',
+        },
+    ]) }} @endif>
     <div class="flex justify-center mb-8">
         <div class="flex flex-col items-center w-[300px]">
             <img class="w-[300px] h-[450px]"

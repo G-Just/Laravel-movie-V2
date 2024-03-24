@@ -7,12 +7,12 @@
     <section class="min-h-screen text-white h-fit bg-neutral-900">
         <div class="min-h-screen pt-10 h-fit">
             <div class="container flex flex-col items-center mx-auto md:flex-row">
-                <div class="flex flex-col items-start justify-center w-full p-8 lg:w-1/3">
-                    <h1 class="p-2 pl-0 text-4xl text-lime-300 md:text-5xl tracking-loose">MovieRating</h1>
+                <div class="flex flex-col items-start justify-center w-full p-8 lg:w-1/2">
+                    <h1 class="p-2 pl-0 text-5xl text-lime-300 md:text-7xl tracking-loose">MovieRating</h1>
                     <h2 class="mb-2 text-3xl leading-relaxed md:text-5xl md:leading-snug">Cinema : the most beautiful
                         fraud in the world
                     </h2>
-                    <p class="mb-4 text-lg md:text-base text-gray-50">Explore your favourite cinema content and express
+                    <p class="mb-4 text-lg md:text-lg text-gray-50">Explore your favourite cinema content and express
                         your optinion.</p>
                     <div class="flex gap-8 mt-2">
                         <a href={{ route('list') }}

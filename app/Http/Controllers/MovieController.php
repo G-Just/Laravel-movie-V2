@@ -96,6 +96,12 @@ class MovieController extends Controller
     }
 
 
+    public function showTMDB(string  $id, string $type, OmdbApiService $omdb, TmdbApiService $tmdb)
+    {
+        return $this->show($tmdb->getImdbId($id, $type), $omdb, $tmdb);
+    }
+
+
     public function destroy(Request $request)
     {
         $movie = Movie::query()->where('imdbID', '=', $request->imdbID)->first();

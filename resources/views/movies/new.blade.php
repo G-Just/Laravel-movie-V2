@@ -11,7 +11,7 @@
                 <div class="grid grid-cols-1 py-4 text-white lg:grid-cols-3 gap-x-8">
                     @forelse ($movies as $movie)
                         <x-movie-card :id="$movie['imdbID']" :poster="$movie['Poster']" :title="$movie['Title']" :year="$movie['Year']"
-                            :type="$movie['Type']" />
+                            :type="$movie['Type']" :db="'omdb'" />
                     @empty
                         <h1>Not found.</h1>
                     @endforelse

@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->prefix('/content')->name('movies.')->group(function () {
     Route::get('/new', [MovieController::class, 'new'])->name('new');
     Route::get('/show/{id}', [MovieController::class, 'show'])->name('show');
+    Route::get('/showTMDB/{id}/{type}', [MovieController::class, 'showTMDB'])->name('showTMDB');
     Route::post('/store', [MovieController::class, 'store'])->name('store');
     Route::post('/destroy', [MovieController::class, 'destroy'])->name('destroy');
     Route::get('/popular', [MovieController::class, 'popular'])->name('popular');

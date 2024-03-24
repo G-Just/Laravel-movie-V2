@@ -86,7 +86,7 @@ class TmdbApiService
         if ($type === 'shows') {
             $content = Http::get('https://api.themoviedb.org/3/trending/tv/week?' . $this->tmdbKey)->collect('results')->toArray();
             foreach ($content as $key => $movie) {
-                $content[$key]['imdbID'] = Http::get('https://api.themoviedb.org/3/tv/' . $movie['id'] . '/external_ids?' . $this->tmdbKey)->collect('imdb_id')->first();
+                // $content[$key]['imdbID'] = Http::get('https://api.themoviedb.org/3/tv/' . $movie['id'] . '/external_ids?' . $this->tmdbKey)->collect('imdb_id')->first();
                 $content[$key]['title'] = $content[$key]['name'];
                 $content[$key]['release_date'] = $content[$key]['first_air_date'];
                 $content[$key]['type'] = 'Show';
@@ -94,11 +94,16 @@ class TmdbApiService
         } else {
             $content = Http::get('https://api.themoviedb.org/3/movie/popular?' . $this->tmdbKey)->collect('results')->toArray();
             foreach ($content as $key => $movie) {
-                $content[$key]['imdbID'] = Http::get('https://api.themoviedb.org/3/movie/' . $movie['id'] . '/external_ids?' . $this->tmdbKey)->collect('imdb_id')->first();
+                // $content[$key]['imdbID'] = Http::get('https://api.themoviedb.org/3/movie/' . $movie['id'] . '/external_ids?' . $this->tmdbKey)->collect('imdb_id')->first();
                 $content[$key]['type'] = 'Movie';
             }
         }
 
         return $content;
+    }
+
+    public function getImdbId(string $id, string $type)
+    {
+        return Http::get('https://api.themoviedb.org/3/' . $type . '/' . $id . '/external_ids?' . $this->tmdbKey)->collect('imdb_id')->first();
     }
 }
