@@ -1,7 +1,7 @@
 @props(['sorts'])
 
 <div class="flex flex-col justify-center px-8 py-6 mb-8 rounded-lg lg:flex-row bg-neutral-950">
-    <form action={{ route('home') }} method="get" class="flex flex-col items-center justify-between w-full lg:flex-row">
+    <form action={{ route('list') }} method="get" class="flex flex-col items-center justify-between w-full lg:flex-row">
         <div class="flex flex-col gap-4 lg:gap-8 lg:flex-row">
             <x-text-input placeholder="Search..." id="search" class="block mt-1 max-w-96 min-w-60" type="text"
                 name="search" :value="request('search')" />
