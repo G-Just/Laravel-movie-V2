@@ -4,7 +4,7 @@
             {{ __('Home') }}
         </h2>
     </x-slot>
-    <section class="min-h-screen text-white h-fit bg-neutral-900">
+    <section class="min-h-screen text-white h-fit">
         <div class="min-h-screen pt-10 h-fit">
             <div class="container flex flex-col items-center mx-auto md:flex-row">
                 <div class="flex flex-col items-start justify-center w-full p-8 lg:w-1/2">
@@ -39,7 +39,7 @@
                                 src="https://c4.wallpaperflare.com/wallpaper/923/620/32/interstellar-movie-wallpaper-preview.jpg">
                         </div>
                         <div>
-                            <img class="hidden inline-block mt-28 lg:block clipped w-[400px] h-[400px] object-cover object-left"
+                            <img class="hidden inline-block mt-28 lg:block clipped w-[400px] h-[400px] object-cover object-[9%]"
                                 src="https://www.hollywoodreporter.com/wp-content/uploads/2018/05/the_dark_knight_-_h_-_2018.jpg?w=1296">
                         </div>
                     </div>
