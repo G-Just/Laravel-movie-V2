@@ -1,3 +1,15 @@
-Add trailers / images / other media in the show page. ✔
+FIXED / COMPLETED
+--------------------------------------------------------
+1. Add trailers / images / other media in the show page. ✔
+2. Fix "popular" page loading time. ✔
 
-FIXME: The "popular" page for most popular movies and shows page is extremely slow because its pulling api for each and every one of the movies/shows. Need to optimize this somehow.
+
+TODO
+--------------------------------------------------------
+1. Inside the show page for some media, the ratings table could get extremely large, so define max height, and expand on click? 
+2. On the show page, ability to click on an actor and see their movies / shows etc? ( idk if worth it )
+3. In addition to 2nd point add search by more criteria then title, actors | genre | year ?
+
+General
+--------------------------------------------------------
+1. Think up more features to add, site looks bland / empty.
