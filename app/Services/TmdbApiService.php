@@ -6,8 +6,13 @@ use Illuminate\Support\Facades\Http;
 
 class TmdbApiService
 {
-    private $tmdbKey = 'api_key=a775215dabc13c77e7e60049fd00e7be';
+    private $tmdbKey = 'api_key=';
     private $defaultBackdrop = 'https://dl.airtable.com/exploreCoverImages%2FCQDQ7kFRSJi1BYaN68YI_exploreCoverImages%252FXrQhMoZpQqeo0X5Q2t1W_4slz_rck6kq-lloyd-dirks.jpg';
+
+    public function __construct()
+    {
+        $this->tmdbKey .= config('services.apiKey.tmdb');
+    }
 
     public function getSearch(string $type, string|int $query, array|null $options = null): array
     {

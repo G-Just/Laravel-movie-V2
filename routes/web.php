@@ -19,6 +19,11 @@ Route::get('/', function () {
     return view('home');
 })->name('home')->middleware('auth');
 
+Route::get('/home', function () {
+    return view('home');
+})->name('home')->middleware('auth');
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/list', [MovieController::class, 'index'])->name('list');
     Route::post('/list', [MovieController::class, 'reset'])->name('reset');
@@ -33,6 +38,7 @@ Route::middleware('auth')->prefix('/content')->name('movies.')->group(function (
     Route::post('/destroy', [MovieController::class, 'destroy'])->name('destroy');
     Route::get('/popular', [MovieController::class, 'popular'])->name('popular');
 });
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'apiKey' => [
+        'tmdb' => env('TMDB_KEY'),
+        'omdb' => env('OMDB_KEY'),
+    ]
 ];
