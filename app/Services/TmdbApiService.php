@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class TmdbApiService
@@ -89,21 +90,28 @@ class TmdbApiService
     public function getPopular(string $type)
     {
         if ($type === 'shows') {
-            $content = Http::get('https://api.themoviedb.org/3/trending/tv/week?' . $this->tmdbKey)->collect('results')->toArray();
-            foreach ($content as $key => $movie) {
-                // $content[$key]['imdbID'] = Http::get('https://api.themoviedb.org/3/tv/' . $movie['id'] . '/external_ids?' . $this->tmdbKey)->collect('imdb_id')->first();
-                $content[$key]['title'] = $content[$key]['name'];
-                $content[$key]['release_date'] = $content[$key]['first_air_date'];
-                $content[$key]['type'] = 'Show';
+            if (Cache::has('popularShows')) {
+                return Cache::get('popularShows');
+            } else {;
+                $content = Http::get('https://api.themoviedb.org/3/trending/tv/week?' . $this->tmdbKey)->collect('results')->toArray();
+                foreach ($content as $key => $movie) {
+                    $content[$key]['title'] = $content[$key]['name'];
+                    $content[$key]['release_date'] = $content[$key]['first_air_date'];
+                    $content[$key]['type'] = 'Show';
+                    Cache::put('popularShows', $content, now()->addDay());
+                }
             }
         } else {
-            $content = Http::get('https://api.themoviedb.org/3/movie/popular?' . $this->tmdbKey)->collect('results')->toArray();
-            foreach ($content as $key => $movie) {
-                // $content[$key]['imdbID'] = Http::get('https://api.themoviedb.org/3/movie/' . $movie['id'] . '/external_ids?' . $this->tmdbKey)->collect('imdb_id')->first();
-                $content[$key]['type'] = 'Movie';
+            if (Cache::has('popularMovies')) {
+                return Cache::get('popularMovies');
+            } else {
+                $content = Http::get('https://api.themoviedb.org/3/movie/popular?' . $this->tmdbKey)->collect('results')->toArray();
+                foreach ($content as $key => $movie) {
+                    $content[$key]['type'] = 'Movie';
+                };
+                Cache::put('popularMovies', $content, now()->addDay());
             }
         }
-
         return $content;
     }
 
