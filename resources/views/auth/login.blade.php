@@ -5,9 +5,11 @@
                 <x-application-logo />
                 <p class="mt-2 font-bold tracking-wide">Movie Rating</p>
             </div>
-            <form class="flex flex-col w-2/3 gap-10 max-sm:w-full max-sm:px-4 max-md:w-3/4" method="POST"
+            <form class="flex flex-col w-2/3 gap-8 max-sm:w-full max-sm:px-4 max-md:w-3/4" method="POST"
                 action="{{ route('login') }}">
                 @csrf
+
+                <!-- Email -->
                 <div class="relative">
                     <p class="absolute pt-0 pb-0 pl-2 pr-2 mb-0 ml-2 mr-0 -mt-2 font-medium bg-neutral-950">
                         Email</p>
@@ -19,6 +21,8 @@
                             {{ $message }}</p>
                     @enderror
                 </div>
+
+                <!-- Password -->
                 <div class="relative">
                     <p class="absolute pt-0 pb-0 pl-2 pr-2 mb-0 ml-2 mr-0 -mt-2 font-medium bg-neutral-950">
                         Password</p>
@@ -30,15 +34,19 @@
                             {{ $message }}</p>
                     @enderror
                 </div>
+
                 <button
-                    class="px-8 py-4 my-8 font-bold text-black hover:bg-lime-500 bg-gradient-to-tr bg-lime-400 rounded-xl"
+                    class="px-8 py-4 font-bold text-black hover:bg-lime-500 bg-gradient-to-tr bg-lime-400 rounded-xl"
                     type="submit">Login</button>
+                <p class="text-sm font-thin">Don't have an account ? <a
+                        class="underline hover:text-lime-300 underline-offset-4"
+                        href={{ route('register') }}>Register</a></p>
                 <p class="text-sm font-thin">By signing in at Movie Rating you confirm that you've read and
                     accepted the
-                    <span><a href="" class="underline hover:text-lime-600 underline-offset-4">Terms of
+                    <span><a href="" class="underline hover:text-lime-300 underline-offset-4">Terms of
                             Service</a></span>
                     and
-                    <span><a href="" class="underline hover:text-lime-600 underline-offset-4">Privacy
+                    <span><a href="" class="underline hover:text-lime-300 underline-offset-4">Privacy
                             Policy</a></span>.
                 </p>
             </form>
