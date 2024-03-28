@@ -9,7 +9,9 @@ TODO
 1. Inside the show page for some media, the ratings table could get extremely large, so define max height, and expand on click? 
 2. On the show page, ability to click on an actor and see their movies / shows etc? ( idk if worth it )
 3. In addition to 2nd point add search by more criteria then title like actors | genre | year ?
+
 4. Add an additional layout in list so that content could be displayed in a grid / list.
+5. Try refactoring TMDB service, this file has a lot of duplicate code.
 
 General
 --------------------------------------------------------
