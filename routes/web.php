@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\PopularController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +37,11 @@ Route::middleware('auth')->prefix('/content')->name('movies.')->group(function (
     Route::get('/showTMDB/{id}/{type}', [MovieController::class, 'showTMDB'])->name('showTMDB');
     Route::post('/store', [MovieController::class, 'store'])->name('store');
     Route::post('/destroy', [MovieController::class, 'destroy'])->name('destroy');
-    Route::get('/popular', [MovieController::class, 'popular'])->name('popular');
+
+    Route::get('/now_playing', [PopularController::class, 'nowPlaying'])->name('playing');
+    Route::get('/popular', [PopularController::class, 'popular'])->name('popular');
+    Route::get('/top_rated', [PopularController::class, 'topRated'])->name('top');
+    Route::get('/upcoming', [PopularController::class, 'upcoming'])->name('upcoming');
 });
 
 

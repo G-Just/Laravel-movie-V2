@@ -45,14 +45,6 @@ class MovieController extends Controller
     }
 
 
-    public function popular(Request $request, TmdbApiService $tmdb)
-    {
-        $content = $tmdb->getPopular($request->type ?? 'movies');
-
-        return view('movies.popular', compact('content'));
-    }
-
-
     public function new(Request $request, OmdbApiService $omdb)
     {
         if ($request->has('search')) {

@@ -20,9 +20,29 @@
                     <x-nav-link class="text-lg" :href="route('movies.new')" :active="request()->routeIs('movies.new')">
                         {{ __('Add Rating') }}
                     </x-nav-link>
-                    <x-nav-link class="text-lg" :href="route('movies.popular')" :active="request()->routeIs('movies.popular')">
-                        {{ __('Popular') }}
-                    </x-nav-link>
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button
+                                class="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 text-gray-400 transition duration-150 ease-in-out border-b-2 border-transparent hover:text-gray-300 hover:border-neutral-600 focus:outline-none focus:text-gray-300 focus:border-neutral-600">
+                                <div class="py-5">Popular</div>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('movies.playing')">
+                                {{ __('Now Playing') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('movies.popular')">
+                                {{ __('Popular') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('movies.top')">
+                                {{ __('Top Rated') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('movies.upcoming')">
+                                {{ __('Upcoming') }}
+                            </x-dropdown-link>
+                        </x-slot>
+                    </x-dropdown>
                 </div>
             </div>
 

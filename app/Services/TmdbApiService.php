@@ -115,6 +115,90 @@ class TmdbApiService
         return $content;
     }
 
+    public function getCurrent(string $type)
+    {
+        if ($type === 'shows') {
+            if (Cache::has('currentShows')) {
+                return Cache::get('currentShows');
+            } else {;
+                $content = Http::get('https://api.themoviedb.org/3/tv/airing_today?' . $this->tmdbKey)->collect('results')->toArray();
+                foreach ($content as $key => $movie) {
+                    $content[$key]['title'] = $content[$key]['name'];
+                    $content[$key]['release_date'] = $content[$key]['first_air_date'];
+                    $content[$key]['type'] = 'Show';
+                    Cache::put('currentShows', $content, now()->addDay());
+                }
+            }
+        } else {
+            if (Cache::has('currentMovies')) {
+                return Cache::get('currentMovies');
+            } else {
+                $content = Http::get('https://api.themoviedb.org/3/movie/now_playing?' . $this->tmdbKey)->collect('results')->toArray();
+                foreach ($content as $key => $movie) {
+                    $content[$key]['type'] = 'Movie';
+                };
+                Cache::put('currentMovies', $content, now()->addDay());
+            }
+        }
+        return $content;
+    }
+
+    public function getTopRated(string $type)
+    {
+        if ($type === 'shows') {
+            if (Cache::has('topShows')) {
+                return Cache::get('topShows');
+            } else {;
+                $content = Http::get('https://api.themoviedb.org/3/tv/top_rated?' . $this->tmdbKey)->collect('results')->toArray();
+                foreach ($content as $key => $movie) {
+                    $content[$key]['title'] = $content[$key]['name'];
+                    $content[$key]['release_date'] = $content[$key]['first_air_date'];
+                    $content[$key]['type'] = 'Show';
+                    Cache::put('topShows', $content, now()->addDay());
+                }
+            }
+        } else {
+            if (Cache::has('topMovies')) {
+                return Cache::get('topMovies');
+            } else {
+                $content = Http::get('https://api.themoviedb.org/3/movie/top_rated?' . $this->tmdbKey)->collect('results')->toArray();
+                foreach ($content as $key => $movie) {
+                    $content[$key]['type'] = 'Movie';
+                };
+                Cache::put('topMovies', $content, now()->addDay());
+            }
+        }
+        return $content;
+    }
+
+    public function getUpcoming(string $type)
+    {
+        if ($type === 'shows') {
+            if (Cache::has('upcomingShows')) {
+                return Cache::get('upcomingShows');
+            } else {;
+                $content = Http::get('https://api.themoviedb.org/3/tv/on_the_air?' . $this->tmdbKey)->collect('results')->toArray();
+                foreach ($content as $key => $movie) {
+                    $content[$key]['title'] = $content[$key]['name'];
+                    $content[$key]['release_date'] = $content[$key]['first_air_date'];
+                    $content[$key]['type'] = 'Show';
+                    Cache::put('upcomingShows', $content, now()->addDay());
+                }
+            }
+        } else {
+            if (Cache::has('upcomingMovies')) {
+                return Cache::get('upcomingMovies');
+            } else {
+                $content = Http::get('https://api.themoviedb.org/3/movie/upcoming?' . $this->tmdbKey)->collect('results')->toArray();
+                foreach ($content as $key => $movie) {
+                    $content[$key]['type'] = 'Movie';
+                };
+                Cache::put('upcomingMovies', $content, now()->addDay());
+            }
+        }
+        return $content;
+    }
+
     public function getImdbId(string $id, string $type)
     {
         return Http::get('https://api.themoviedb.org/3/' . $type . '/' . $id . '/external_ids?' . $this->tmdbKey)->collect('imdb_id')->first();
