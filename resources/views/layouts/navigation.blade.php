@@ -112,8 +112,17 @@
             <x-responsive-nav-link :href="route('movies.new')" :active="request()->routeIs('movies.new')">
                 {{ __('Add Rating') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('movies.playing')" :active="request()->routeIs('movies.playing')">
+                {{ __('Now Playing') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('movies.popular')" :active="request()->routeIs('movies.popular')">
                 {{ __('Popular') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('movies.top')" :active="request()->routeIs('movies.top')">
+                {{ __('Top Rated') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('movies.upcoming')" :active="request()->routeIs('movies.upcoming')">
+                {{ __('Upcoming') }}
             </x-responsive-nav-link>
         </div>
 
