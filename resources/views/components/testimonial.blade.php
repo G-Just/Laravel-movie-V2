@@ -7,7 +7,7 @@
             fill="currentColor" />
     </svg>
     <div class="px-6 mt-4 sm:ml-6 sm:mt-0 lg:ml-0 lg:mt-6">
-        <p class="text-lg text-white">
+        <p class="text-lg text-white break-words text-wrap">
             @if ($comment)
                 {{ $comment }} - <span class="text-sm">rated: {{ $rating }}</span>
             @else
