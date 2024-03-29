@@ -2,6 +2,7 @@ FIXED / COMPLETED
 --------------------------------------------------------
 1. Add trailers / images / other media in the show page. ✔
 2. Fix "popular" page loading time. ✔
+3.Try refactoring TMDB service, this file has a lot of duplicate code. ✔
 
 
 TODO
@@ -11,7 +12,6 @@ TODO
 3. In addition to 2nd point add search by more criteria then title like actors | genre | year ?
 
 4. Add an additional layout in list so that content could be displayed in a grid / list.
-5. Try refactoring TMDB service, this file has a lot of duplicate code.
 
 General
 --------------------------------------------------------
