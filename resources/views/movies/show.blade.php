@@ -48,6 +48,7 @@
                         <hr class="my-1" />
                         <div class="flex gap-4 overflow-x-auto lg:gap-0">
                             @foreach ($actors as $actor)
+                                @dump($actor)
                                 <x-actor-card :image="$actor['profile_path']" :name="$actor['name']" />
                             @endforeach
                         </div>
