@@ -3,13 +3,14 @@ FIXED / COMPLETED
 1. Add trailers / images / other media in the show page. ✔
 2. Fix "popular" page loading time. ✔
 3.Try refactoring TMDB service, this file has a lot of duplicate code. ✔
+4. Inside the show page for some media, the ratings table could get extremely large, so define max height ✔
+
 
 
 TODO
 --------------------------------------------------------
-1. Inside the show page for some media, the ratings table could get extremely large, so define max height, and expand on click? 
-2. On the show page, ability to click on an actor and see their movies / shows etc? ( idk if worth it )
-3. In addition to 2nd point add search by more criteria then title like actors | genre | year ?
+1. On the show page, ability to click on an actor and see their movies / shows etc? ( idk if worth it )
+2. In addition to 2nd point add search by more criteria then title like actors | genre | year ?
 
 4. Add an additional layout in list so that content could be displayed in a grid / list.
 
