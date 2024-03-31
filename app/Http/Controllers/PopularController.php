@@ -10,7 +10,7 @@ class PopularController extends Controller
     public function popular(Request $request, TmdbApiService $tmdb)
     {
         $content = $tmdb->getPopular($request->type ?? 'movies');
-
+        dd($content);
         return view('movies.popular', compact('content'));
     }
 

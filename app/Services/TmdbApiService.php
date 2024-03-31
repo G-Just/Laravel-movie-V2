@@ -94,16 +94,16 @@ class TmdbApiService
                 return Cache::get('popularShows');
             } else {;
                 $content = Http::get('https://api.themoviedb.org/3/trending/tv/week?' . $this->tmdbKey)->collect('results')->toArray();
-                $this->unifyShows($content);
-                Cache::put('popularShows', $content, now()->addDay());
+                $content = $this->unifyShows($content);
+                Cache::put('popularShows', $content, now()->addHour());
             }
         } else {
             if (Cache::has('popularMovies')) {
                 return Cache::get('popularMovies');
             } else {
                 $content = Http::get('https://api.themoviedb.org/3/movie/popular?' . $this->tmdbKey)->collect('results')->toArray();
-                $this->unifyMovies($content);
-                Cache::put('popularMovies', $content, now()->addDay());
+                $content = $this->unifyMovies($content);
+                Cache::put('popularMovies', $content, now()->addHour());
             }
         }
         return $content;
@@ -116,16 +116,16 @@ class TmdbApiService
                 return Cache::get('currentShows');
             } else {;
                 $content = Http::get('https://api.themoviedb.org/3/tv/airing_today?' . $this->tmdbKey)->collect('results')->toArray();
-                $this->unifyShows($content);
-                Cache::put('currentShows', $content, now()->addDay());
+                $content = $this->unifyShows($content);
+                Cache::put('currentShows', $content, now()->addHour());
             }
         } else {
             if (Cache::has('currentMovies')) {
                 return Cache::get('currentMovies');
             } else {
                 $content = Http::get('https://api.themoviedb.org/3/movie/now_playing?' . $this->tmdbKey)->collect('results')->toArray();
-                $this->unifyMovies($content);
-                Cache::put('currentMovies', $content, now()->addDay());
+                $content = $this->unifyMovies($content);
+                Cache::put('currentMovies', $content, now()->addHour());
             }
         }
         return $content;
@@ -138,16 +138,16 @@ class TmdbApiService
                 return Cache::get('topShows');
             } else {;
                 $content = Http::get('https://api.themoviedb.org/3/tv/top_rated?' . $this->tmdbKey)->collect('results')->toArray();
-                $this->unifyShows($content);
-                Cache::put('topShows', $content, now()->addDay());
+                $content = $this->unifyShows($content);
+                Cache::put('topShows', $content, now()->addHour());
             }
         } else {
             if (Cache::has('topMovies')) {
                 return Cache::get('topMovies');
             } else {
                 $content = Http::get('https://api.themoviedb.org/3/movie/top_rated?' . $this->tmdbKey)->collect('results')->toArray();
-                $this->unifyMovies($content);
-                Cache::put('topMovies', $content, now()->addDay());
+                $content = $this->unifyMovies($content);
+                Cache::put('topMovies', $content, now()->addHour());
             }
         }
         return $content;
@@ -160,16 +160,16 @@ class TmdbApiService
                 return Cache::get('upcomingShows');
             } else {;
                 $content = Http::get('https://api.themoviedb.org/3/tv/on_the_air?' . $this->tmdbKey)->collect('results')->toArray();
-                $this->unifyShows($content);
-                Cache::put('upcomingShows', $content, now()->addDay());
+                $content = $this->unifyShows($content);
+                Cache::put('upcomingShows', $content, now()->addHour());
             }
         } else {
             if (Cache::has('upcomingMovies')) {
                 return Cache::get('upcomingMovies');
             } else {
                 $content = Http::get('https://api.themoviedb.org/3/movie/upcoming?' . $this->tmdbKey)->collect('results')->toArray();
-                $this->unifyMovies($content);
-                Cache::put('upcomingMovies', $content, now()->addDay());
+                $content = $this->unifyMovies($content);
+                Cache::put('upcomingMovies', $content, now()->addHour());
             }
         }
         return $content;
