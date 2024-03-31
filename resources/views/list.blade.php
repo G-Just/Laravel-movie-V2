@@ -10,20 +10,39 @@
             <x-filtering-menu :sorts="$sorts" />
             <div class="overflow-hidden shadow-sm bg-neutral-950 sm:rounded-lg">
                 <div class="p-6 text-gray-100">
-                    <div class="mb-6">{{ $movies->links() }}</div>
-                    @forelse ($movies as $movie)
-                        <x-rated-movie-card :count="count($movie->ratings)" :imdbid="$movie['imdbID']" :title="$movie['title']" :year="$movie['year']"
-                            :genre="$movie['genre']" :plot="$movie['plot']" :poster="$movie['poster']" :runtime="$movie['runtime']" :rating="$movie['ratings_avg_rating']"
-                            :rated="$movie
-                                ->ratings()
-                                ->where('user_id', '=', Auth::user()->getAuthIdentifier())
-                                ->first()
-                                ? true
-                                : false" />
-                    @empty
-                        <h1>Nothing here.</h1>
-                    @endforelse
-                    {{ $movies->links() }}
+                    @if (request('layout') !== 'grid')
+                        <div class="mb-6">{{ $movies->links() }}
+                            @forelse ($movies as $movie)
+                                <x-rated-movie-card-list :count="count($movie->ratings)" :imdbid="$movie['imdbID']" :title="$movie['title']"
+                                    :year="$movie['year']" :genre="$movie['genre']" :plot="$movie['plot']" :poster="$movie['poster']"
+                                    :runtime="$movie['runtime']" :rating="$movie['ratings_avg_rating']" :rated="$movie
+                                        ->ratings()
+                                        ->where('user_id', '=', Auth::user()->getAuthIdentifier())
+                                        ->first()
+                                        ? true
+                                        : false" />
+                            @empty
+                                <h1 class="text-2xl text-center">Nothing here</h1>
+                            @endforelse
+                            {{ $movies->links() }}
+                        </div>
+                    @else
+                        <div class="grid grid-cols-3 mb-6 gap-x-6 gap-y-4">{{ $movies->links() }}
+                            @forelse ($movies as $movie)
+                                <x-rated-movie-card-grid :count="count($movie->ratings)" :imdbid="$movie['imdbID']" :title="$movie['title']"
+                                    :year="$movie['year']" :genre="$movie['genre']" :plot="$movie['plot']" :poster="$movie['poster']"
+                                    :runtime="$movie['runtime']" :rating="$movie['ratings_avg_rating']" :rated="$movie
+                                        ->ratings()
+                                        ->where('user_id', '=', Auth::user()->getAuthIdentifier())
+                                        ->first()
+                                        ? true
+                                        : false" />
+                            @empty
+                                <h1 class="text-2xl text-center">Nothing here</h1>
+                            @endforelse
+                            {{ $movies->links() }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

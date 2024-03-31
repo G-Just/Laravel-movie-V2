@@ -1,28 +1,28 @@
 @props(['count', 'imdbid', 'title', 'year', 'genre', 'plot', 'poster', 'runtime', 'rating', 'rated'])
 
-<a href={{ route('movies.show', $imdbid) }}>
-    <div class="flex flex-col gap-4 p-2 mb-8 border-2 border-neutral-700 lg:flex-row">
+<a href={{ route('movies.show', $imdbid) }} class="h-[700px]">
+    <div class="h-full gap-4 p-2 mb-8 border-2 border-neutral-700">
         <img class="h-[300px] mx-auto w-[200px]"
             src={{ $poster === 'N/A' ? 'https://www.prokerala.com/movies/assets/img/no-poster-available.jpg' : $poster }}
             alt="Poster" />
-        <div class="flex flex-col p-4 border-b-2 border-r-0 lg:pr-4 lg:border-b-0 lg:border-r-2 border-neutral-700">
-            <div class="flex flex-col lg:flex-row">
+        <div class="flex flex-col p-4 pr-4 border-b-2 border-neutral-700 h-[280px]">
+            <div class="flex">
                 <div class="flex">
-                    <h1 class="text-4xl font-bold max-w-[400px]">{{ $title }}</h1>
-                    <h1 class="mx-2 text-4xl font-thin">({{ $year }})</h1>
+                    <h1 class="text-2xl font-bold max-w-[400px] h-[64px] overflow-hidden">{{ $title }}</h1>
+                    <h1 class="mx-2 text-2xl font-thin">({{ $year }})</h1>
                 </div>
                 @if ($rated)
-                    <x-tag :label="'Your rated this'" />
+                    <x-tag :label={{ __('Your rated this') }} />
                 @endif
             </div>
-            <p class="mt-1 text-gray-500">
+            <p class="mt-1 text-gray-500 h-[54px]">
                 {{ str_replace(',', ' | ', $genre) }}
                 {{ ' ~ Runtime : ' }}
                 {{ $runtime }}
             </p>
-            <p class="mt-2 lg:mt-8 line-clamp-3 lg:line-clamp-4">{{ $plot }}</p>
+            <p class="mt-2 line-clamp-3">{{ $plot }}</p>
             <div class="flex items-end flex-1">
-                <div class="flex pt-2 lg:pt-0">
+                <div class="flex pt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-5 h-5 mr-2 text-base text-lime-300">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -32,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex items-center justify-center px-20 py-4 text-5xl font-bold lg:w-56 lg:py-0 lg:justify-end">
+        <div class="flex items-center justify-center py-6 text-5xl font-bold ">
             {{ $rating == 0 ? '-' : number_format($rating, 1) }}</div>
     </div>
 </a>
