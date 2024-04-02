@@ -7,11 +7,11 @@ FIXED / COMPLETED
 5. Add an additional layout in list so that content could be displayed in a grid / list. ✔
 
 
-
 TODO
 --------------------------------------------------------
 1. On the show page, ability to click on an actor and see their movies / shows etc? ( idk if worth it )
 2. Add search by more criteria then title like actors | genre | year ?
+
 
 General
 --------------------------------------------------------
