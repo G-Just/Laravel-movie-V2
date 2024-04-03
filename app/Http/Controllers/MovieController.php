@@ -98,6 +98,9 @@ class MovieController extends Controller
     {
         $movie = Movie::query()->where('imdbID', '=', $request->imdbID)->first();
         $movie->find($movie->id)->ratings()->where('user_id', '=', $request->user_id)->first()->delete();
+        if (count($movie->ratings) === 0) {
+            $movie->delete();
+        };
         return redirect()->route('list')->with('message', 'Your rating deleted successfully');
     }
 

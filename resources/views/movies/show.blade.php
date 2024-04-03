@@ -105,6 +105,7 @@
             <x-modal name="confirm-rating-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
                 <form method="POST" action="{{ route('movies.destroy') }}" class="p-6">
                     @csrf
+                    @method('Delete')
                     <input type="hidden" name="imdbID" value={{ $movie['imdbID'] }}>
                     <input type="hidden" name="user_id" value={{ Auth::user()->id }}>
 
