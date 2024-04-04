@@ -11,6 +11,7 @@ class Movie extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
         'title',
         'imdbID',
@@ -21,10 +22,12 @@ class Movie extends Model
         'runtime',
     ];
 
+
     public function ratings(): HasMany
     {
         return $this->hasMany(Rating::class);
     }
+
 
     protected static $sorts =
     [
@@ -34,6 +37,7 @@ class Movie extends Model
         'rating' => 'Rating descending',
         'rating_a' => 'Rating ascending'
     ];
+
 
     public static function getSorts()
     {
