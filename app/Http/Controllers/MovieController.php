@@ -79,7 +79,6 @@ class MovieController extends Controller
         $actors = $tmdb->getActors(explode(', ', $movie['Actors']));
         $backdrop = $tmdb->getBackdrop($movie['Type'], $movie['Title'], $movie['Year']);
         $videos = $tmdb->getVideos($movie['Type'], $movie['Title'], $movie['Year']);
-
         $movieModel = Movie::query()->where('imdbID', '=', $id)->first();
         $ratings = $movieModel?->ratings;
         $ratings = isset($ratings) ? $ratings : collect([]);
