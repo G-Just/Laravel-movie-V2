@@ -15,11 +15,9 @@ class MovieController extends Controller
     public function index(Request $request)
     {
         $movies = Movie::withAvg('ratings', 'rating');
-
         if ($request->has('search')) {
             $movies = $movies->where('title', 'like', '%' . $request->search . '%');
         }
-
         $movies = match ($request->sorting) {
             'rating' => $movies->orderBy('ratings_avg_rating', 'desc'),
             'rating_a' => $movies->orderBy('ratings_avg_rating', 'asc'),
@@ -28,7 +26,6 @@ class MovieController extends Controller
             'date_a' => $movies->orderBy('created_at', 'asc'),
             default => $movies->orderBy('created_at', 'desc')
         };
-
         $movies = match ($request->rated) {
             'rated' => $movies->whereHas('ratings', function ($query) {
                 return $query->where('user_id', '=', Auth::user()->getAuthIdentifier());
@@ -38,7 +35,6 @@ class MovieController extends Controller
             }),
             default => $movies
         };
-
         $movies = $movies->paginate(6)->appends(request()->query());
         $sorts = Movie::getSorts();
         return view('list', compact(['movies', 'sorts']));
@@ -59,16 +55,11 @@ class MovieController extends Controller
     public function store(StoreRequest $request)
     {
         $validatedRating = $request->safe()->only(['rating', 'comment']);
-
         $movieValidated = $request->safe()->except(['rating', 'comment']);
-
         $movie = Movie::firstOrCreate($movieValidated);
-
         $ids['user_id'] = Auth::user()->getAuthIdentifier();
         $ids['movie_id'] = $movie->id;
-
         Rating::updateOrCreate($ids, $validatedRating);
-
         return redirect()->route('list')->with('message', 'Rating submitted successfully');
     }
 
