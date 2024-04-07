@@ -10,7 +10,7 @@ FIXED / COMPLETED
 TODO
 --------------------------------------------------------
 1. Add search by more criteria then title like actors | genre | year ?
-
+2. Upon changing the layout change the pagination from 6 to 9. Grid layout can fit more cards
 
 General
 --------------------------------------------------------

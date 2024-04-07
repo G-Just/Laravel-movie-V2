@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreRequest;
 use App\Models\Movie;
 use App\Models\Rating;
+use App\Models\Related;
 use App\Services\OmdbApiService;
 use App\Services\TmdbApiService;
 use Illuminate\Http\Request;
@@ -60,6 +61,9 @@ class MovieController extends Controller
         $ids['user_id'] = Auth::user()->getAuthIdentifier();
         $ids['movie_id'] = $movie->id;
         Rating::updateOrCreate($ids, $validatedRating);
+        foreach ($request->related as $related) {
+            Related::updateOrCreate(['movie_id' => $movie->id, 'related_movie_id' => $related]);
+        }
         return redirect()->route('list')->with('message', 'Rating submitted successfully');
     }
 
@@ -73,8 +77,10 @@ class MovieController extends Controller
         $movieModel = Movie::query()->where('imdbID', '=', $id)->first();
         $ratings = $movieModel?->ratings;
         $ratings = isset($ratings) ? $ratings : collect([]);
-
-        return view('movies.show', compact(['movie', 'backdrop', 'ratings', 'actors', 'videos']));
+        $allMovies = Movie::all()->filter(function (object $item) use ($movieModel) {
+            return $item->id !== $movieModel->id;
+        });
+        return view('movies.show', compact(['movie', 'backdrop', 'ratings', 'actors', 'videos', 'allMovies', 'movieModel']));
     }
 
 

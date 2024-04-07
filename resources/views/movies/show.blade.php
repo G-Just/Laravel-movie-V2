@@ -73,71 +73,7 @@
         </div>
     </div>
     <hr class="mt-4 mb-8">
-    <div class="flex flex-col items-center w-full gap-4 py-10">
-        <div class="p-4 py-10 border lg:w-1/3 rounded-xl border-neutral-600 bg-neutral-900">
-            <h1 class="text-5xl text-center text-white">Add your rating</h1>
-            <form class="flex flex-col items-center w-full mt-4" action={{ route('movies.store') }} method="POST">
-                @csrf
-                <input type="hidden" name="title" value="{{ $movie['Title'] }}" />
-                <input type="hidden" name="imdbID" value="{{ $movie['imdbID'] }}" />
-                <input type="hidden" name="year" value="{{ $movie['Year'] }}" />
-                <input type="hidden" name="genre" value="{{ $movie['Genre'] }}" />
-                <input type="hidden" name="plot" value="{{ $movie['Plot'] }}" />
-                <input type="hidden" name="poster" value="{{ $movie['Poster'] }}" />
-                <input type="hidden" name="runtime" value="{{ $movie['Runtime'] }}" />
-                <x-input-label for="rating" :value="__('Enter your rating (0.1 - 10)')" />
-                <x-text-input value="{{ $ratings->firstWhere('user_id', Auth::user()->id)?->rating }}" id="rating"
-                    class="block w-full mt-1 max-w-96" type="text" name="rating" required />
-                <x-input-error :messages="$errors->get('rating')" class="my-2" />
-                <x-input-label class="mt-2" for="comment" :value="__('Leave a comment (optional)')" />
-                <textarea
-                    class="w-full mt-1 text-gray-300 rounded-md shadow-sm max-w-96 border-neutral-700 bg-neutral-900 focus:border-lime-600 focus:ring-lime-600"
-                    name="comment" id="comment">{{ $ratings->firstWhere('user_id', Auth::user()->id)?->comment }}</textarea>
-                <div class="flex justify-center gap-8">
-                    @if ($ratings->firstWhere('user_id', Auth::user()->id))
-                        <x-primary-button class="mt-4">
-                            {{ __('Update') }}
-                        </x-primary-button>
-            </form>
-            <x-danger-button class="mt-4" x-data=""
-                x-on:click.prevent="$dispatch('open-modal', 'confirm-rating-deletion')">{{ __('Delete') }}</x-danger-button>
-
-            <x-modal name="confirm-rating-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-                <form method="POST" action="{{ route('movies.destroy') }}" class="p-6">
-                    @csrf
-                    @method('Delete')
-                    <input type="hidden" name="imdbID" value={{ $movie['imdbID'] }}>
-                    <input type="hidden" name="user_id" value={{ Auth::user()->id }}>
-
-                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        {{ __('Are you sure you want to delete your rating?') }}
-                    </h2>
-
-                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        {{ __('The rating will be permenately deleted') }}
-                    </p>
-
-                    <div class="flex justify-end mt-6">
-                        <x-secondary-button x-on:click="$dispatch('close')">
-                            {{ __('Cancel') }}
-                        </x-secondary-button>
-
-                        <x-danger-button class="ms-3">
-                            {{ __('Delete rating') }}
-                        </x-danger-button>
-                    </div>
-                </form>
-            </x-modal>
-        </div>
-    </div>
-@else
-    <x-primary-button class="mt-4">
-        {{ __('Submit') }}
-    </x-primary-button>
-    </div>
-    </form>
-    @endif
-    </div>
+    <x-add-rating :movie="$movie" :ratings="$ratings" :allMovies="$allMovies" />
     <hr class="w-full mt-4 mb-8">
     <div class="flex flex-col items-center w-full pb-10">
         <h1 class="mb-8 text-5xl text-center text-white">Ratings</h1>
@@ -150,7 +86,7 @@
                 </tr>
             </thead>
             <tbody class="flex flex-col items-center justify-between w-full overflow-y-scroll bg-grey-light"
-                style="height: 50vh;">
+                style="max-height: 50vh;">
                 @forelse ($ratings->all() as $rating)
                     <tr class="flex w-full bg-neutral-800 border-neutral-700">
                         <td class="w-1/3 px-6 py-4">{{ $rating->id }}</td>
@@ -177,5 +113,11 @@
                 <h1 class="col-span-3 text-xl text-center text-white">No comments.</h1>
             @endforelse
         </div>
+    </div>
+    <hr class="w-full mt-4 mb-8">
+    <div class="flex flex-col items-center w-full pb-10">
+        <h1 class="mb-8 text-5xl text-center text-white">Recomended</h1>
+        <p>If you liked this you might like:</p>
+        @dump($movieModel)
     </div>
 </x-app-layout>
