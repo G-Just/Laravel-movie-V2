@@ -77,10 +77,7 @@ class MovieController extends Controller
         $movieModel = Movie::query()->where('imdbID', '=', $id)->first();
         $ratings = $movieModel?->ratings;
         $ratings = isset($ratings) ? $ratings : collect([]);
-        $allMovies = Movie::all()->filter(function (object $item) use ($movieModel) {
-            return $item->id !== $movieModel->id;
-        });
-        return view('movies.show', compact(['movie', 'backdrop', 'ratings', 'actors', 'videos', 'allMovies', 'movieModel']));
+        return view('movies.show', compact(['movie', 'backdrop', 'ratings', 'actors', 'videos']));
     }
 
 

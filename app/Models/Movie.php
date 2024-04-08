@@ -27,6 +27,11 @@ class Movie extends Model
         return $this->hasMany(Rating::class);
     }
 
+    public function related(): HasMany
+    {
+        return $this->hasMany(Related::class, 'related_movie_id');
+    }
+
 
     protected static $sorts =
     [
