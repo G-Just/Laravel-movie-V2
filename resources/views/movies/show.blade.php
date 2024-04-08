@@ -118,7 +118,7 @@
     <div class="flex flex-col items-center w-full pb-10">
         <h1 class="mb-4 text-5xl text-center text-white">Recomended</h1>
         <p class="mb-4 text-lg">If you liked this content you might also like:</p>
-        <div class="w-1/2 p-4 bg-neutral-900">
+        <div class="w-full p-4 lg:w-1/2 bg-neutral-900">
             @forelse ($relatedMovies as $movie)
                 <x-rated-movie-card-list :count="count($movie->ratings)" :imdbid="$movie['imdbID']" :title="$movie['title']" :year="$movie['year']"
                     :genre="$movie['genre']" :plot="$movie['plot']" :poster="$movie['poster']" :runtime="$movie['runtime']" :rating="$movie['ratings_avg_rating']"

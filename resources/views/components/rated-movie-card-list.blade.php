@@ -18,7 +18,7 @@
             src={{ $poster === 'N/A' ? 'https://www.prokerala.com/movies/assets/img/no-poster-available.jpg' : $poster }}
             alt="Poster" />
         <div
-            class="flex flex-col p-4 border-b-2 border-r-0 lg:pr-4 lg:border-b-0 @if (!$non_rating) lg:border-r-2 @endif border-neutral-700">
+            class="flex flex-col p-4 @if (!$non_rating) border-b-2 @endif border-r-0 lg:pr-4 lg:border-b-0 @if (!$non_rating) lg:border-r-2 @endif border-neutral-700">
             <div class="flex flex-col lg:flex-row">
                 <div class="flex">
                     <h1 class="text-4xl font-bold max-w-[400px]">{{ $title }}</h1>
