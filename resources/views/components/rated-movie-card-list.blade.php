@@ -1,11 +1,24 @@
-@props(['count', 'imdbid', 'title', 'year', 'genre', 'plot', 'poster', 'runtime', 'rating', 'rated'])
+@props([
+    'count',
+    'imdbid',
+    'title',
+    'year',
+    'genre',
+    'plot',
+    'poster',
+    'runtime',
+    'rating',
+    'rated',
+    'non_rating' => false,
+])
 
 <a href={{ route('movies.show', $imdbid) }}>
     <div class="flex flex-col gap-4 p-2 mb-8 border-2 border-neutral-700 lg:flex-row">
         <img class="h-[300px] mx-auto w-[200px]"
             src={{ $poster === 'N/A' ? 'https://www.prokerala.com/movies/assets/img/no-poster-available.jpg' : $poster }}
             alt="Poster" />
-        <div class="flex flex-col p-4 border-b-2 border-r-0 lg:pr-4 lg:border-b-0 lg:border-r-2 border-neutral-700">
+        <div
+            class="flex flex-col p-4 border-b-2 border-r-0 lg:pr-4 lg:border-b-0 @if (!$non_rating) lg:border-r-2 @endif border-neutral-700">
             <div class="flex flex-col lg:flex-row">
                 <div class="flex">
                     <h1 class="text-4xl font-bold max-w-[400px]">{{ $title }}</h1>
@@ -32,7 +45,11 @@
                 </div>
             </div>
         </div>
-        <div class="flex items-center justify-center px-20 py-4 text-5xl font-bold lg:w-56 lg:py-0 lg:justify-end">
-            {{ $rating == 0 ? '-' : number_format($rating, 1) }}</div>
+        @if ($non_rating)
+        @else
+            <div class="flex items-center justify-center px-20 py-4 text-5xl font-bold lg:w-56 lg:py-0 lg:justify-end">
+                {{ $rating == 0 ? '-' : number_format($rating, 1) }}
+            </div>
+        @endif
     </div>
 </a>

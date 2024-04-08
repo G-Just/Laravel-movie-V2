@@ -124,7 +124,7 @@
                     :genre="$movie['genre']" :plot="$movie['plot']" :poster="$movie['poster']" :runtime="$movie['runtime']" :rating="$movie['ratings_avg_rating']"
                     :rated="$movie->ratings()->where('user_id', '=', Auth::user()->getAuthIdentifier())->first()
                         ? true
-                        : false" />
+                        : false" :non_rating="true" />
             @empty
                 <p class="text-2xl text-center">No similar content.</p>
             @endforelse
