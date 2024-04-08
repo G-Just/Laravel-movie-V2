@@ -61,8 +61,14 @@ class MovieController extends Controller
         $ids['user_id'] = Auth::user()->getAuthIdentifier();
         $ids['movie_id'] = $movie->id;
         Rating::updateOrCreate($ids, $validatedRating);
-        foreach ($request->related as $related) {
-            Related::updateOrCreate(['movie_id' => $movie->id, 'related_movie_id' => $related]);
+        if ($request->has('related')) {
+            foreach ($request->related as $related) {
+                Related::updateOrCreate(['movie_id' => $movie->id, 'related_movie_id' => $related]);
+                Related::updateOrCreate(['movie_id' => $related, 'related_movie_id' => $movie->id]);
+            }
+        } else {
+            Related::where('related_movie_id', '=', $movie->id)->delete();
+            Related::where('movie_id', '=', $movie->id)->delete();
         }
         return redirect()->route('list')->with('message', 'Rating submitted successfully');
     }
@@ -73,11 +79,24 @@ class MovieController extends Controller
         $movie = $omdb->getById($id);
         $actors = $tmdb->getActors(explode(', ', $movie['Actors']));
         $backdrop = $tmdb->getBackdrop($movie['Type'], $movie['Title'], $movie['Year']);
-        $videos = $tmdb->getVideos($movie['Type'], $movie['Title'], $movie['Year']);
+        $videos = [];
+        // $tmdb->getVideos($movie['Type'], $movie['Title'], $movie['Year']);
         $movieModel = Movie::query()->where('imdbID', '=', $id)->first();
         $ratings = $movieModel?->ratings;
         $ratings = isset($ratings) ? $ratings : collect([]);
-        return view('movies.show', compact(['movie', 'backdrop', 'ratings', 'actors', 'videos']));
+        $allMovies = collect([]);
+        $relatedMovies = collect([]);
+        if (isset($movieModel)) {
+            $allMovies = Movie::all()->filter(function ($movie) use ($movieModel) {
+                return $movie->id !== $movieModel->id;
+            });
+            if (count($movieModel->related) > 0) {
+                $relatedMovies = $movieModel->related->map(function ($model) {
+                    return $model->movie;
+                });
+            }
+        }
+        return view('movies.show', compact(['movie', 'backdrop', 'ratings', 'actors', 'videos', 'allMovies', 'movieModel', 'relatedMovies']));
     }
 
 

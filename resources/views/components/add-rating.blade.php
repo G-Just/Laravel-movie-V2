@@ -1,4 +1,4 @@
-@props(['movie', 'ratings'])
+@props(['movie', 'ratings', 'allMovies', 'relatedMovies'])
 <div class="flex flex-col items-center w-full gap-4 py-10">
     <div class="p-4 py-10 border lg:w-1/3 rounded-xl border-neutral-600 bg-neutral-900">
         <h1 class="text-5xl text-center text-white">Add your rating</h1>
@@ -20,15 +20,15 @@
                 class="w-full mt-1 text-gray-300 rounded-md shadow-sm max-w-96 border-neutral-700 bg-neutral-900 focus:border-lime-600 focus:ring-lime-600"
                 name="comment" id="comment">{{ $ratings->firstWhere('user_id', Auth::user()->id)?->comment }}
             </textarea>
-            {{-- @if (count($allMovies) > 0)
+            @if (count($allMovies) > 0)
                 <x-input-label for="related" :value="__('Similar content (optional)')" class="mt-2" />
                 <div class="w-auto my-2 overflow-x-hidden overflow-y-auto max-h-96">
                     @foreach ($allMovies as $movie)
-                        <x-movie-option :movie="$movie" />
+                        <x-movie-option :movie="$movie" :relatedMovies="$relatedMovies" />
                     @endforeach
                 </div>
                 <p class="text-xs">*Select content that you think other people would like, if they liked this.</p>
-            @endif --}}
+            @endif
             <div class="flex justify-center gap-8">
                 @if ($ratings->firstWhere('user_id', Auth::user()->id))
                     <x-primary-button class="mt-4">

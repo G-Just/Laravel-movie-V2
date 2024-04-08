@@ -73,7 +73,7 @@
         </div>
     </div>
     <hr class="mt-4 mb-8">
-    <x-add-rating :movie="$movie" :ratings="$ratings" />
+    <x-add-rating :movie="$movie" :ratings="$ratings" :allMovies="$allMovies" :relatedMovies="$relatedMovies" />
     <hr class="w-full mt-4 mb-8">
     <div class="flex flex-col items-center w-full pb-10">
         <h1 class="mb-8 text-5xl text-center text-white">Ratings</h1>
@@ -116,8 +116,18 @@
     </div>
     <hr class="w-full mt-4 mb-8">
     <div class="flex flex-col items-center w-full pb-10">
-        <h1 class="mb-8 text-5xl text-center text-white">Recomended</h1>
-        <p>If you liked this you might like:</p>
-        <p>In development</p>
+        <h1 class="mb-4 text-5xl text-center text-white">Recomended</h1>
+        <p class="mb-4 text-lg">If you liked this content you might also like:</p>
+        <div class="w-1/2 p-4 bg-neutral-900">
+            @forelse ($relatedMovies as $movie)
+                <x-rated-movie-card-list :count="count($movie->ratings)" :imdbid="$movie['imdbID']" :title="$movie['title']" :year="$movie['year']"
+                    :genre="$movie['genre']" :plot="$movie['plot']" :poster="$movie['poster']" :runtime="$movie['runtime']" :rating="$movie['ratings_avg_rating']"
+                    :rated="$movie->ratings()->where('user_id', '=', Auth::user()->getAuthIdentifier())->first()
+                        ? true
+                        : false" />
+            @empty
+                <p class="text-2xl text-center">No similar content.</p>
+            @endforelse
+        </div>
     </div>
 </x-app-layout>
