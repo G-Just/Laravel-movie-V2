@@ -1,6 +1,6 @@
 @props(['movie', 'ratings', 'allMovies', 'relatedMovies'])
 <div class="flex flex-col items-center w-full gap-4 py-10">
-    <div class="p-4 py-10 border lg:w-1/3 rounded-xl border-neutral-600 bg-neutral-900">
+    <div class="w-full p-4 py-10 border lg:w-1/3 rounded-xl border-neutral-600 bg-neutral-900">
         <h1 class="text-5xl text-center text-white">Add your rating</h1>
         <form class="flex flex-col items-center w-full mt-4" action={{ route('movies.store') }} method="POST">
             @csrf
@@ -21,8 +21,8 @@
                 name="comment" id="comment">{{ $ratings->firstWhere('user_id', Auth::user()->id)?->comment }}
             </textarea>
             @if (count($allMovies) > 0)
-                <x-input-label for="related" :value="__('Similar content (optional)')" class="mt-2" />
-                <div class="w-auto my-2 overflow-x-hidden overflow-y-auto max-h-96">
+                <x-input-label for="related" :value="__('Similar content (optional)')" class="my-2" />
+                <div class="w-full my-2 overflow-x-hidden overflow-y-auto lg:px-10 md:px-20 max-h-96">
                     @foreach ($allMovies as $movie)
                         <x-movie-option :movie="$movie" :relatedMovies="$relatedMovies" />
                     @endforeach
