@@ -21,8 +21,8 @@
             class="flex flex-col p-4 @if (!$non_rating) border-b-2 @endif border-r-0 lg:pr-4 lg:border-b-0 @if (!$non_rating) lg:border-r-2 @endif border-neutral-700">
             <div class="flex flex-col lg:flex-row">
                 <div class="flex">
-                    <h1 class="text-4xl font-bold max-w-[400px]">{{ $title }}</h1>
-                    <h1 class="mx-2 text-4xl font-thin">({{ $year }})</h1>
+                    <h1 class="text-2xl lg:text-4xl font-bold max-w-[400px]">{{ $title }}</h1>
+                    <h1 class="mx-2 text-2xl font-thin lg:text-4xl">({{ $year }})</h1>
                 </div>
                 @if ($rated)
                     <x-tag :label={{ __('Your rated this') }} />

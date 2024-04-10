@@ -36,7 +36,7 @@ class MovieController extends Controller
             }),
             default => $movies
         };
-        $movies = $movies->paginate(6)->appends(request()->query());
+        $movies = $movies->paginate($request->layout === 'grid' ? 9 : 6)->appends(request()->query());
         $sorts = Movie::getSorts();
         return view('list', compact(['movies', 'sorts']));
     }

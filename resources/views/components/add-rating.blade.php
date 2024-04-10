@@ -1,6 +1,6 @@
 @props(['movie', 'ratings', 'allMovies', 'relatedMovies'])
 <div class="flex flex-col items-center w-full gap-4 py-10">
-    <div class="w-full p-4 py-10 border lg:w-1/3 rounded-xl border-neutral-600 bg-neutral-900">
+    <div class="w-full p-4 py-10 border lg:w-1/2 rounded-xl border-neutral-600 bg-neutral-900">
         <h1 class="text-5xl text-center text-white">Add your rating</h1>
         <form class="flex flex-col items-center w-full mt-4" action={{ route('movies.store') }} method="POST">
             @csrf
