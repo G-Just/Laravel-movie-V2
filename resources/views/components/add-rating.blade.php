@@ -22,7 +22,7 @@
             </textarea>
             @if (count($allMovies) > 0)
                 <x-input-label for="related" :value="__('Similar content (optional)')" class="my-2" />
-                <div class="w-full my-2 overflow-x-hidden overflow-y-auto lg:px-10 md:px-20 max-h-96">
+                <div class="w-full my-2 overflow-x-hidden overflow-y-auto px-2 max-w-[450px] max-h-96">
                     @foreach ($allMovies as $movie)
                         <x-movie-option :movie="$movie" :relatedMovies="$relatedMovies" />
                     @endforeach

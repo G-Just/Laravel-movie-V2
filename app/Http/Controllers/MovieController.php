@@ -17,8 +17,12 @@ class MovieController extends Controller
     {
         $movies = Movie::withAvg('ratings', 'rating');
         if ($request->has('search')) {
-            $movies = $movies->where('title', 'like', '%' . $request->search . '%');
-        }
+            $movies = $movies->where('title', 'like', '%' . $request->search . '%')
+                ->orWhere('year', 'like', '%' . $request->search . '%')
+                ->orWhere('genre', 'like', '%' . $request->search . '%')
+                ->orWhere('plot', 'like', '%' . $request->search . '%');
+        };
+
         $movies = match ($request->sorting) {
             'rating' => $movies->orderBy('ratings_avg_rating', 'desc'),
             'rating_a' => $movies->orderBy('ratings_avg_rating', 'asc'),
@@ -27,6 +31,7 @@ class MovieController extends Controller
             'date_a' => $movies->orderBy('created_at', 'asc'),
             default => $movies->orderBy('created_at', 'desc')
         };
+
         $movies = match ($request->rated) {
             'rated' => $movies->whereHas('ratings', function ($query) {
                 return $query->where('user_id', '=', Auth::user()->getAuthIdentifier());
@@ -36,6 +41,7 @@ class MovieController extends Controller
             }),
             default => $movies
         };
+
         $movies = $movies->paginate($request->layout === 'grid' ? 9 : 6)->appends(request()->query());
         $sorts = Movie::getSorts();
         return view('list', compact(['movies', 'sorts']));
@@ -57,10 +63,14 @@ class MovieController extends Controller
     {
         $validatedRating = $request->safe()->only(['rating', 'comment']);
         $movieValidated = $request->safe()->except(['rating', 'comment']);
+
         $movie = Movie::firstOrCreate($movieValidated);
+
         $ids['user_id'] = Auth::user()->getAuthIdentifier();
         $ids['movie_id'] = $movie->id;
+
         Rating::updateOrCreate($ids, $validatedRating);
+
         if ($request->has('related')) {
             foreach ($request->related as $related) {
                 Related::updateOrCreate(['movie_id' => $movie->id, 'related_movie_id' => $related]);
@@ -70,6 +80,7 @@ class MovieController extends Controller
             Related::where('related_movie_id', '=', $movie->id)->delete();
             Related::where('movie_id', '=', $movie->id)->delete();
         }
+
         return redirect()->route('list')->with('message', 'Rating submitted successfully');
     }
 
@@ -82,11 +93,14 @@ class MovieController extends Controller
         $videos = $tmdb->getVideos($movie['Type'], $movie['Title'], $movie['Year']);
         $movieModel = Movie::query()->where('imdbID', '=', $id)->first();
         $ratings = $movieModel?->ratings;
+
         $ratings = isset($ratings) ? $ratings : collect([]);
         $allMovies = collect([]);
         $relatedMovies = collect([]);
+        $allMovies = Movie::all();
+
         if (isset($movieModel)) {
-            $allMovies = Movie::all()->filter(function ($movie) use ($movieModel) {
+            $allMovies = $allMovies->filter(function ($movie) use ($movieModel) {
                 return $movie->id !== $movieModel->id;
             });
             if (count($movieModel->related) > 0) {
@@ -95,6 +109,7 @@ class MovieController extends Controller
                 });
             }
         }
+
         return view('movies.show', compact(['movie', 'backdrop', 'ratings', 'actors', 'videos', 'allMovies', 'movieModel', 'relatedMovies']));
     }
 
@@ -109,9 +124,11 @@ class MovieController extends Controller
     {
         $movie = Movie::query()->where('imdbID', '=', $request->imdbID)->first();
         $movie->find($movie->id)->ratings()->where('user_id', '=', $request->user_id)->first()->delete();
+
         if (count($movie->ratings) === 0) {
             $movie->delete();
         };
+
         return redirect()->route('list')->with('message', 'Your rating deleted successfully');
     }
 

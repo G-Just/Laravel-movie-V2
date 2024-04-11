@@ -5,12 +5,15 @@ FIXED / COMPLETED
 3. Try refactoring TMDB service, this file has a lot of duplicate code. ✔
 4. Inside the show page for some media, the ratings table could get extremely large, so define max height ✔
 5. Add an additional layout in list so that content could be displayed in a grid / list. ✔
+6. Upon changing the layout change the pagination from 6 to 9. Grid layout can fit more cards ✔
+7. Add search by more criteria then title like actors | genre | year ✔
+8. Fix that initially adding content there is no similar movie section ✔
 
 
 TODO
 --------------------------------------------------------
-1. Add search by more criteria then title like actors | genre | year ?
-2. Upon changing the layout change the pagination from 6 to 9. Grid layout can fit more cards
+
+
 
 General
 --------------------------------------------------------
