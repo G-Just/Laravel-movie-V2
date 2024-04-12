@@ -13,7 +13,7 @@
                         <x-movie-card :id="$movie['imdbID']" :poster="$movie['Poster']" :title="$movie['Title']" :year="$movie['Year']"
                             :type="$movie['Type']" :db="'omdb'" />
                     @empty
-                        <h1>Not found.</h1>
+                        <h1 class="col-span-3 text-xl text-center">Not found.</h1>
                     @endforelse
                 </div>
             </div>
