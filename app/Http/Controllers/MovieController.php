@@ -53,7 +53,7 @@ class MovieController extends Controller
         if ($request->has('search')) {
             $movies = $omdb->search($request->search);
         } else {
-            $movies = $omdb->search('Batman');
+            $movies = $omdb->search('Movie');
         }
         return view('movies.new', compact(['movies']));
     }
