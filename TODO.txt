@@ -12,9 +12,8 @@ FIXED / COMPLETED
 
 TODO
 --------------------------------------------------------
-
+1.Create a show page for actors?
 
 
 General
 --------------------------------------------------------
-1. Think up more features to add, site looks bland / empty.
