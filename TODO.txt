@@ -12,7 +12,8 @@ FIXED / COMPLETED
 
 TODO
 --------------------------------------------------------
-1.Create a show page for actors?
+1.Search bar for similar content section.
+2.Create a show page for actors?
 
 
 General
