@@ -97,7 +97,7 @@ class MovieController extends Controller
         $ratings = isset($ratings) ? $ratings : collect([]);
         $allMovies = collect([]);
         $relatedMovies = collect([]);
-        $allMovies = Movie::all();
+        $allMovies = Movie::orderBy('title')->get();
 
         if (isset($movieModel)) {
             $allMovies = $allMovies->filter(function ($movie) use ($movieModel) {
