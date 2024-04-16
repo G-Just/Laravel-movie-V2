@@ -42,10 +42,12 @@ class TmdbApiService
     public function getActors(array $actors): array
     {
         $actorsArray = [];
-
         foreach ($actors as $actor) {
-            $actorsArray[$actor] = $this->getSearch('person', $actor)[0];
-        }
+            $person = $this->getSearch('person', $actor);
+            if ($person == true) {
+                $actorsArray[$actor] = $person[0];
+            };
+        };
 
         return $actorsArray;
     }
