@@ -12,7 +12,7 @@
                     <h1 class="mx-2 text-2xl font-thin">({{ $year }})</h1>
                 </div>
                 @if ($rated)
-                    <x-tag :label={{ __('Your rated this') }} />
+                    <x-tag :label="'Your rated this'" />
                 @endif
             </div>
             <p class="mt-1 text-gray-500 h-[54px]">

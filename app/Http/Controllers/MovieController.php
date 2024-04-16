@@ -16,12 +16,6 @@ class MovieController extends Controller
     public function index(Request $request)
     {
         $movies = Movie::withAvg('ratings', 'rating');
-        if ($request->has('search')) {
-            $movies = $movies->where('title', 'like', '%' . $request->search . '%')
-                ->orWhere('year', 'like', '%' . $request->search . '%')
-                ->orWhere('genre', 'like', '%' . $request->search . '%')
-                ->orWhere('plot', 'like', '%' . $request->search . '%');
-        };
 
         $movies = match ($request->sorting) {
             'rating' => $movies->orderBy('ratings_avg_rating', 'desc'),
@@ -40,6 +34,10 @@ class MovieController extends Controller
                 return $query->where('user_id', '=', Auth::user()->getAuthIdentifier());
             }),
             default => $movies
+        };
+
+        if ($request->has('search')) {
+            $movies = $movies->where('title', 'like', '%' . $request->search . '%');
         };
 
         $movies = $movies->paginate($request->layout === 'grid' ? 9 : 6)->appends(request()->query());

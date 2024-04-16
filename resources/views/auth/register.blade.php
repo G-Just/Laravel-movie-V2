@@ -40,7 +40,7 @@
                 <div class="relative">
                     <p class="absolute pt-0 pb-0 pl-2 pr-2 mb-0 ml-2 mr-0 -mt-2 font-medium bg-neutral-950">
                         Password</p>
-                    <x-text-input placeholder="*******" type="text" name='password'
+                    <x-text-input placeholder="*******" type="password" name='password'
                         class="block w-full py-4 pl-4 pr-4 mt-2 mb-0 ml-0 mr-0 text-base border rounded-md placeholder-neutral-700 focus:border-lime-300 bg-neutral-950 border-neutral-600" />
                     @error('password')
                         <p
@@ -53,7 +53,7 @@
                 <div class="relative">
                     <p class="absolute pt-0 pb-0 pl-2 pr-2 mb-0 ml-2 mr-0 -mt-2 font-medium bg-neutral-950">
                         Password</p>
-                    <x-text-input placeholder="*******" type="text" name='password_confirmation'
+                    <x-text-input placeholder="*******" type="password" name='password_confirmation'
                         class="block w-full py-4 pl-4 pr-4 mt-2 mb-0 ml-0 mr-0 text-base border rounded-md placeholder-neutral-700 focus:border-lime-300 bg-neutral-950 border-neutral-600" />
                     @error('password_confirmation')
                         <p
