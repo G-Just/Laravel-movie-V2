@@ -80,7 +80,6 @@
         <table class="w-full text-sm text-left text-gray-400 lg:w-1/2">
             <thead class="text-xs text-gray-400 uppercase bg-neutral-700">
                 <tr class="flex w-full">
-                    <th class="w-1/3 px-6 py-3">ID</th>
                     <th class="w-1/3 px-6 py-3">User</th>
                     <th class="w-1/3 px-6 py-3">Rating</th>
                 </tr>
@@ -89,13 +88,11 @@
                 style="max-height: 50vh;">
                 @forelse ($ratings->all() as $rating)
                     <tr class="flex w-full bg-neutral-800 border-neutral-700">
-                        <td class="w-1/3 px-6 py-4">{{ $rating->id }}</td>
                         <td class="w-1/3 px-6 py-4">{{ $rating->user()->first()->name }}</td>
                         <td class="w-1/3 px-6 py-4">{{ $rating->rating }}</td>
                     </tr>
                 @empty
                     <tr class="flex w-full bg-neutral-800 border-neutral-700">
-                        <td class="w-1/3 px-6 py-4">-</td>
                         <td class="w-1/3 px-6 py-4">-</td>
                         <td class="w-1/3 px-6 py-4">-</td>
                     </tr>
