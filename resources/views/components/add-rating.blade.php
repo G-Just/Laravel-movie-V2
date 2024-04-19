@@ -1,4 +1,4 @@
-@props(['movie', 'ratings', 'allMovies', 'relatedMovies'])
+@props(['movie', 'imdbID', 'ratings', 'allMovies', 'relatedMovies'])
 <div class="flex flex-col items-center w-full gap-4 py-10">
     <div class="w-full p-4 py-10 border lg:w-1/2 rounded-xl border-neutral-600 bg-neutral-900">
         <h1 class="text-5xl text-center text-white">Add your rating</h1>
@@ -18,7 +18,8 @@
             <x-input-label class="mt-2" for="comment" :value="__('Leave a comment (optional)')" />
             <textarea
                 class="w-full mt-1 text-gray-300 rounded-md shadow-sm max-w-96 border-neutral-700 bg-neutral-900 focus:border-lime-600 focus:ring-lime-600"
-                name="comment" id="comment">{{ $ratings->firstWhere('user_id', Auth::user()->id)?->comment }}
+                name="comment" id="comment">
+                {{ $ratings->firstWhere('user_id', Auth::user()->id)?->comment }}
             </textarea>
             @if (count($allMovies) > 0)
                 <x-input-label for="related" :value="__('Similar content (optional)')" class="my-2" />
@@ -41,8 +42,8 @@
         <x-modal name="confirm-rating-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
             <form method="POST" action="{{ route('movies.destroy') }}" class="p-6">
                 @csrf
-                @method('Delete')
-                <input type="hidden" name="imdbID" value={{ $movie['imdbID'] }}>
+
+                <input type="hidden" name="imdbID" value={{ $imdbID }}>
                 <input type="hidden" name="user_id" value={{ Auth::user()->id }}>
 
                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">

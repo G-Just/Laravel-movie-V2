@@ -22,21 +22,21 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123')
         ]);
 
-        for ($i = 0; $i < 50; $i++) {
-            DB::table('users')->insert([
-                'name' => Str::random(10),
-                'email' => Str::random(10) . '@example.com',
-                'password' => Hash::make('password'),
-            ]);
-        }
+        // for ($i = 0; $i < 50; $i++) {
+        //     DB::table('users')->insert([
+        //         'name' => Str::random(10),
+        //         'email' => Str::random(10) . '@example.com',
+        //         'password' => Hash::make('password'),
+        //     ]);
+        // }
 
-        for ($i = 2; $i < 20; $i++) {
-            DB::table('ratings')->insert([
-                'rating' => 10,
-                'comment' => Str::random(50),
-                'user_id' => $i,
-                'movie_id' => 1
-            ]);
-        }
+        // for ($i = 2; $i < 20; $i++) {
+        //     DB::table('ratings')->insert([
+        //         'rating' => 10,
+        //         'comment' => Str::random(50),
+        //         'user_id' => $i,
+        //         'movie_id' => 1
+        //     ]);
+        // }
     }
 }

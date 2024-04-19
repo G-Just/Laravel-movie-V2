@@ -73,7 +73,7 @@
         </div>
     </div>
     <hr class="mt-4 mb-8">
-    <x-add-rating :movie="$movie" :ratings="$ratings" :allMovies="$allMovies" :relatedMovies="$relatedMovies" />
+    <x-add-rating :movie="$movie" :imdbID="$movie['imdbID']" :ratings="$ratings" :allMovies="$allMovies" :relatedMovies="$relatedMovies" />
     <hr class="w-full mt-4 mb-8">
     <div class="flex flex-col items-center w-full pb-10">
         <h1 class="mb-8 text-5xl text-center text-white">Ratings</h1>

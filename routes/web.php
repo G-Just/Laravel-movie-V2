@@ -36,7 +36,7 @@ Route::middleware('auth')->prefix('/content')->name('movies.')->group(function (
     Route::get('/show/{id}', [MovieController::class, 'show'])->name('show');
     Route::get('/showTMDB/{id}/{type}', [MovieController::class, 'showTMDB'])->name('showTMDB');
     Route::post('/store', [MovieController::class, 'store'])->name('store');
-    Route::delete('/destroy', [MovieController::class, 'destroy'])->name('destroy');
+    Route::post('/destroy', [MovieController::class, 'destroy'])->name('destroy');
 
     Route::get('/now_playing', [PopularController::class, 'nowPlaying'])->name('playing');
     Route::get('/popular', [PopularController::class, 'popular'])->name('popular');
@@ -48,7 +48,7 @@ Route::middleware('auth')->prefix('/content')->name('movies.')->group(function (
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__ . '/auth.php';
