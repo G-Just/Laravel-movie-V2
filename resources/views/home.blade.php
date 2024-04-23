@@ -12,8 +12,8 @@
                     <h2 class="mb-2 text-3xl leading-relaxed md:text-5xl md:leading-snug">Cinema : the most beautiful
                         fraud in the world
                     </h2>
-                    <p class="mb-4 text-lg md:text-lg text-gray-50">Explore your favourite cinema content and express
-                        your optinion.</p>
+                    <p class="mb-4 text-lg md:text-lg text-gray-50">Explore your favorite cinema content and express your
+                        opinion.</p>
                     <div class="flex gap-8 mt-2">
                         <a href={{ route('list') }}
                             class="px-4 py-2 bg-transparent border rounded shadow text-lime-300 border-lime-300 hover:bg-lime-300 hover:text-black hover:shadow-lg hover:border-transparent">
