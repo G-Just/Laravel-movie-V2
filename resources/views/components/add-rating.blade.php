@@ -31,7 +31,7 @@
 
                     input.addEventListener("input", () => {
                         [...selections].forEach((selection) => {
-                            if (selection.id.toLowerCase().includes(input.value)) {
+                            if (selection.id.toLowerCase().includes(input.value.toLowerCase())) {
                                 selection.classList.remove("hidden");
                             } else {
                                 selection.classList.add("hidden");
