@@ -27,6 +27,20 @@
                     <div class="flex flex-col items-center px-8 mx-auto">
                         <input id="movieOptionSearch" type="text" placeholder="Search"
                             class="w-full px-2 text-gray-300 rounded-md shadow-sm border-neutral-700 bg-neutral-900 focus:border-lime-600 focus:ring-lime-600">
+                        <script defer>
+                            const input = document.getElementById("movieOptionSearch");
+                            const selections = document.getElementsByClassName("movieOption");
+
+                            input.addEventListener("input", () => {
+                                [...selections].forEach((selection) => {
+                                    if (selection.id.toLowerCase().includes(input.value)) {
+                                        selection.classList.remove("hidden");
+                                    } else {
+                                        selection.classList.add("hidden");
+                                    }
+                                });
+                            });
+                        </script>
                     </div>
                     @foreach ($allMovies as $movie)
                         <x-movie-option :movie="$movie" :relatedMovies="$relatedMovies" />
