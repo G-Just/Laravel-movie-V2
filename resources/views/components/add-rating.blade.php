@@ -11,19 +11,23 @@
             <input type="hidden" name="plot" value="{{ $movie['Plot'] }}" />
             <input type="hidden" name="poster" value="{{ $movie['Poster'] }}" />
             <input type="hidden" name="runtime" value="{{ $movie['Runtime'] }}" />
-            <x-input-label for="rating" :value="__('Enter your rating (0.1 - 10)')" />
+            <x-input-label class="mt-4" for="rating" :value="__('Enter your rating (0.1 - 10)')" />
             <x-text-input value="{{ $ratings->firstWhere('user_id', Auth::user()->id)?->rating }}" id="rating"
                 class="block w-full mt-1 max-w-96" type="text" name="rating" required />
             <x-input-error :messages="$errors->get('rating')" class="my-2" />
-            <x-input-label class="mt-2" for="comment" :value="__('Leave a comment (optional)')" />
+            <x-input-label class="mt-4" for="comment" :value="__('Leave a comment (optional)')" />
             <textarea
                 class="w-full mt-1 text-gray-300 rounded-md shadow-sm max-w-96 border-neutral-700 bg-neutral-900 focus:border-lime-600 focus:ring-lime-600"
                 name="comment" id="comment">
                 {{ $ratings->firstWhere('user_id', Auth::user()->id)?->comment }}
             </textarea>
             @if (count($allMovies) > 0)
-                <x-input-label for="related" :value="__('Similar content (optional)')" class="my-2" />
-                <div class="w-full my-2 overflow-x-hidden overflow-y-auto px-2 max-w-[450px] max-h-96">
+                <x-input-label for="related" :value="__('Similar content (optional)')" class="mt-4" />
+                <div class="w-full overflow-x-hidden overflow-y-auto px-2 max-w-[450px] max-h-96">
+                    <div class="flex flex-col items-center px-8 mx-auto">
+                        <input id="movieOptionSearch" type="text" placeholder="Search"
+                            class="w-full px-2 text-gray-300 rounded-md shadow-sm border-neutral-700 bg-neutral-900 focus:border-lime-600 focus:ring-lime-600">
+                    </div>
                     @foreach ($allMovies as $movie)
                         <x-movie-option :movie="$movie" :relatedMovies="$relatedMovies" />
                     @endforeach

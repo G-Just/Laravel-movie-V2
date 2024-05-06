@@ -4,7 +4,7 @@
         return $item->id;
     });
 @endphp
-<div class="relative flex items-start w-full px-2 py-2 ml-2 min-w-52">
+<div id="{{ $movie->title }}" class="relative flex items-start w-full px-2 py-2 min-w-52 movieOption">
     <input id="{{ $movie->id }}" type="checkbox" class="hidden peer" name="related[]" value="{{ $movie->id }}"
         @if ($relatedMovies->contains($movie->id)) checked @endif>
     <label for="{{ $movie->id }}"
