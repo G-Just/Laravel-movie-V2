@@ -23,24 +23,24 @@
             </textarea>
             @if (count($allMovies) > 0)
                 <x-input-label for="related" :value="__('Similar content (optional)')" class="mt-4" />
-                <div class="w-full overflow-x-hidden overflow-y-auto px-2 max-w-[450px] max-h-96">
-                    <div class="flex flex-col items-center px-8 mx-auto">
-                        <input id="movieOptionSearch" type="text" placeholder="Search"
-                            class="w-full px-2 text-gray-300 rounded-md shadow-sm border-neutral-700 bg-neutral-900 focus:border-lime-600 focus:ring-lime-600">
-                        <script defer>
-                            const input = document.getElementById("movieOptionSearch");
-                            const selections = document.getElementsByClassName("movieOption");
+                <input id="movieOptionSearch" type="text" placeholder="Search"
+                    class="max-w-[350px] w-full px-2 text-gray-300 rounded-md shadow-sm border-neutral-700 bg-neutral-900 focus:border-lime-600 focus:ring-lime-600">
+                <script defer>
+                    const input = document.getElementById("movieOptionSearch");
+                    const selections = document.getElementsByClassName("movieOption");
 
-                            input.addEventListener("input", () => {
-                                [...selections].forEach((selection) => {
-                                    if (selection.id.toLowerCase().includes(input.value)) {
-                                        selection.classList.remove("hidden");
-                                    } else {
-                                        selection.classList.add("hidden");
-                                    }
-                                });
-                            });
-                        </script>
+                    input.addEventListener("input", () => {
+                        [...selections].forEach((selection) => {
+                            if (selection.id.toLowerCase().includes(input.value)) {
+                                selection.classList.remove("hidden");
+                            } else {
+                                selection.classList.add("hidden");
+                            }
+                        });
+                    });
+                </script>
+                <div class="w-full overflow-x-hidden overflow-y-auto mt-2 px-2 max-w-[450px] max-h-96">
+                    <div class="flex flex-col items-center px-8 mx-auto">
                     </div>
                     @foreach ($allMovies as $movie)
                         <x-movie-option :movie="$movie" :relatedMovies="$relatedMovies" />
