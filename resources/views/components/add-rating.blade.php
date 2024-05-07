@@ -28,7 +28,6 @@
                 <script defer>
                     const input = document.getElementById("movieOptionSearch");
                     const selections = document.getElementsByClassName("movieOption");
-
                     input.addEventListener("input", () => {
                         [...selections].forEach((selection) => {
                             if (selection.id.toLowerCase().includes(input.value.toLowerCase())) {
