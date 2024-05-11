@@ -13,20 +13,17 @@ class PopularController extends Controller
         return view('movies.popular', compact('content'));
     }
 
-
     public function nowPlaying(Request $request, TmdbApiService $tmdb)
     {
         $content = $tmdb->getCurrent($request->type ?? 'movies');
         return view('movies.now_playing', compact('content'));
     }
 
-
     public function topRated(Request $request, TmdbApiService $tmdb)
     {
         $content = $tmdb->getTopRated($request->type ?? 'movies');
         return view('movies.top_rated', compact('content'));
     }
-
 
     public function upcoming(Request $request, TmdbApiService $tmdb)
     {
