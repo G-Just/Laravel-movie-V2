@@ -24,12 +24,10 @@ Route::get('/home', function () {
     return view('home');
 })->name('home')->middleware('auth');
 
-
 Route::middleware('auth')->group(function () {
     Route::get('/list', [MovieController::class, 'index'])->name('list');
     Route::post('/list', [MovieController::class, 'reset'])->name('reset');
 });
-
 
 Route::middleware('auth')->prefix('/content')->name('movies.')->group(function () {
     Route::get('/new', [MovieController::class, 'new'])->name('new');
@@ -43,7 +41,6 @@ Route::middleware('auth')->prefix('/content')->name('movies.')->group(function (
     Route::get('/top_rated', [PopularController::class, 'topRated'])->name('top');
     Route::get('/upcoming', [PopularController::class, 'upcoming'])->name('upcoming');
 });
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
