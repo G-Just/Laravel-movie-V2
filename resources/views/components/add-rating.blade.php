@@ -18,9 +18,7 @@
             <x-input-label class="mt-4" for="comment" :value="__('Leave a comment (optional)')" />
             <textarea
                 class="w-full mt-1 text-gray-300 rounded-md shadow-sm max-w-96 border-neutral-700 bg-neutral-900 focus:border-lime-600 focus:ring-lime-600"
-                name="comment" id="comment">
-                {{ $ratings->firstWhere('user_id', Auth::user()->id)?->comment }}
-            </textarea>
+                name="comment" id="comment">{{ $ratings->firstWhere('user_id', Auth::user()->id)?->comment }}</textarea>
             @if (count($allMovies) > 0)
                 <x-input-label for="related" :value="__('Similar content (optional)')" class="mt-4" />
                 <input id="movieOptionSearch" type="text" placeholder="Search"
