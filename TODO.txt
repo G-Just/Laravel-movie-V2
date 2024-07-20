@@ -8,12 +8,12 @@ FIXED / COMPLETED
 6. Upon changing the layout change the pagination from 6 to 9. Grid layout can fit more cards ✔
 7. Add search by more criteria then title like actors | genre | year ✔
 8. Fix that initially adding content there is no similar movie section ✔
-
+9.Search bar for similar content section ✔
 
 TODO
 --------------------------------------------------------
-1.Search bar for similar content section.
-2.Create a show page for actors?
+
+1.Create a show page for actors?
 
 
 General
